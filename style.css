@@ -1,0 +1,1376 @@
+/* ==================================================
+   RESET
+================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ==================================================
+   VARIABLES
+================================================== */
+
+:root {
+    --background: #f6f5f2;
+    --card: #ffffff;
+
+    --purple: #7c3aed;
+    --purple-dark: #6d28d9;
+    --purple-light: #f2efff;
+    --purple-soft: #eee7ff;
+
+    --black: #171717;
+    --gray: #66615b;
+
+    --border: #e6e3dc;
+
+    --transition-fast: 180ms;
+    --transition-normal: 280ms;
+}
+
+
+/* ==================================================
+   BASE
+================================================== */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: var(--background);
+
+    color: var(--black);
+
+    font-family: "Spline Sans", sans-serif;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* ==================================================
+   CONTAINER
+================================================== */
+
+.container {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+}
+
+
+/* ==================================================
+   HERO
+================================================== */
+
+.hero {
+    max-width: 900px;
+
+    padding: 90px 0 55px;
+}
+
+
+/* ==================================================
+   EYEBROW
+================================================== */
+
+.eyebrow {
+    margin-bottom: 24px;
+
+    color: var(--purple);
+
+    font-family: "Bungee", sans-serif;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ==================================================
+   TITLE
+================================================== */
+
+.hero h1 {
+    margin-bottom: 30px;
+
+    font-family: "Bungee", sans-serif;
+
+    font-size: clamp(
+        3.5rem,
+        8vw,
+        7rem
+    );
+
+    font-weight: 400;
+
+    line-height: 0.9;
+
+    letter-spacing: -0.06em;
+
+    text-transform: uppercase;
+}
+
+
+/* ==================================================
+   SUBTITLE
+================================================== */
+
+.subtitle {
+    max-width: 560px;
+
+    color: var(--gray);
+
+    font-family: "Lexend Deca", sans-serif;
+
+    font-size: 1.1rem;
+
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   PASSWORD CARD
+================================================== */
+
+.password-card {
+    padding: 34px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 20px 60px rgba(
+            0,
+            0,
+            0,
+            0.06
+        );
+
+    transition-property:
+        box-shadow,
+        transform;
+
+    transition-duration:
+        300ms;
+
+    transition-timing-function:
+        ease;
+}
+
+
+.password-card:hover {
+    box-shadow:
+        0 24px 70px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+}
+
+
+/* ==================================================
+   SECTION LABEL
+================================================== */
+
+.section-label {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: var(--purple);
+
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+
+/* ==================================================
+   PASSWORD SECTION
+================================================== */
+
+.password-section {
+    margin-bottom: 32px;
+}
+
+
+/* ==================================================
+   PASSWORD OUTPUT
+================================================== */
+
+.password-output {
+    padding: 22px 24px;
+
+    background: var(--purple-light);
+
+    border:
+        1px solid rgba(
+            124,
+            58,
+            237,
+            0.08
+        );
+
+    border-radius: 20px;
+}
+
+
+.password-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.password-output p {
+    flex: 1;
+
+    min-width: 0;
+
+    overflow-wrap: anywhere;
+
+    color: var(--black);
+
+    font-family: "Lexend Deca", sans-serif;
+
+    font-size: 1.45rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+}
+
+
+/* ==================================================
+   EYE BUTTON
+================================================== */
+
+.eye-button {
+    width: 100px;
+
+    height: 62px;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    background: var(--purple);
+
+    border: none;
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 8px 20px rgba(
+            124,
+            58,
+            237,
+            0.20
+        );
+
+    transition-property:
+        transform,
+        background-color,
+        box-shadow;
+
+    transition-duration:
+        300ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+.eye-button:hover {
+    background:
+        var(--purple-dark);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(
+            124,
+            58,
+            237,
+            0.28
+        );
+}
+
+
+.eye-button:active {
+    transform:
+        scale(0.96);
+}
+
+
+/* ==================================================
+   EYE FACE
+================================================== */
+
+.eye-face {
+    width: 72px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+}
+
+
+/* ==================================================
+   EYE BALL
+================================================== */
+
+.eye-ball {
+    position: relative;
+
+    width: 29px;
+
+    height: 29px;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transform-origin: center;
+
+    transition-property:
+        transform;
+
+    transition-duration:
+        300ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* ==================================================
+   PUPIL
+================================================== */
+
+.eye-pupil {
+    position: absolute;
+
+    top: 50%;
+
+    left: 50%;
+
+    width: 11px;
+
+    height: 14px;
+
+    background: var(--black);
+
+    border-radius: 50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    transition-property:
+        transform,
+        width,
+        height;
+
+    transition-duration:
+        250ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* ==================================================
+   HIDDEN PASSWORD
+================================================== */
+
+.eye-button:not(.is-visible)
+.eye-ball {
+
+    transform:
+        scaleY(0.82);
+}
+
+
+.eye-button:not(.is-visible)
+.eye-pupil {
+
+    width: 10px;
+
+    height: 13px;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        translateY(2px);
+}
+
+
+/* ==================================================
+   VISIBLE PASSWORD
+================================================== */
+
+.eye-button.is-visible
+.eye-ball {
+
+    transform:
+        scaleY(1);
+}
+
+
+.eye-button.is-visible
+.eye-pupil {
+
+    width: 13px;
+
+    height: 18px;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        translateY(-1px);
+}
+
+
+/* ==================================================
+   EYE POP
+================================================== */
+
+.eye-button.is-visible
+.eye-ball {
+
+    animation-name:
+        eye-look;
+
+    animation-duration:
+        350ms;
+
+    animation-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+@keyframes eye-look {
+
+    0% {
+        transform:
+            scale(
+                0.82
+            );
+    }
+
+    55% {
+        transform:
+            scale(
+                1.08
+            );
+    }
+
+    100% {
+        transform:
+            scale(
+                1
+            );
+    }
+}
+
+
+/* ==================================================
+   SETTINGS
+================================================== */
+
+.settings-layout {
+    display: grid;
+
+    grid-template-columns:
+        180px 1fr;
+
+    gap: 40px;
+
+    margin-bottom: 30px;
+}
+
+
+/* ==================================================
+   LENGTH
+================================================== */
+
+.length-section {
+    padding-right: 30px;
+
+    border-right:
+        1px solid #e8e4dc;
+}
+
+
+.length-section input {
+    width: 100%;
+
+    padding: 18px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #ded9d1;
+
+    border-radius:
+        18px;
+
+    outline: none;
+
+    color:
+        var(--black);
+
+    font-size:
+        1.35rem;
+
+    font-weight:
+        600;
+
+    text-align:
+        center;
+
+    transition-property:
+        border-color,
+        box-shadow;
+
+    transition-duration:
+        220ms;
+
+    transition-timing-function:
+        ease;
+}
+
+
+.length-section input:focus {
+    border-color:
+        var(--purple);
+
+    box-shadow:
+        0 0 0 4px rgba(
+            124,
+            58,
+            237,
+            0.10
+        );
+}
+
+
+/* ==================================================
+   OPTIONS
+================================================== */
+
+.options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+
+/* ==================================================
+   CHECKBOX
+================================================== */
+
+.checkbox {
+    position: relative;
+
+    min-height: 82px;
+
+    padding: 14px 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    background:
+        #faf9f7;
+
+    border:
+        1px solid #e5e1da;
+
+    border-radius:
+        18px;
+
+    cursor:
+        pointer;
+
+    transition-property:
+        background-color,
+        border-color,
+        transform,
+        box-shadow;
+
+    transition-duration:
+        220ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+.checkbox:hover {
+    background:
+        #f8f4ff;
+
+    border-color:
+        rgba(
+            124,
+            58,
+            237,
+            0.35
+        );
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(
+            124,
+            58,
+            237,
+            0.07
+        );
+}
+
+
+.checkbox input {
+    position: absolute;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+}
+
+
+/* ==================================================
+   CHECK BOX
+================================================== */
+
+.check-box {
+    width: 38px;
+
+    height: 38px;
+
+    flex-shrink:
+        0;
+
+    background:
+        #ffffff;
+
+    border:
+        1.5px solid #d9d3cb;
+
+    border-radius:
+        11px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    transition-property:
+        background-color,
+        border-color,
+        transform;
+
+    transition-duration:
+        250ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+/* Check */
+
+.check-box::after {
+    content:
+        "";
+
+    width:
+        7px;
+
+    height:
+        14px;
+
+    border-right:
+        3px solid #ffffff;
+
+    border-bottom:
+        3px solid #ffffff;
+
+    opacity:
+        0;
+
+    transform:
+        rotate(45deg)
+        scale(0);
+
+    transition-property:
+        transform,
+        opacity;
+
+    transition-duration:
+        250ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+.checkbox input:checked
++ .check-box {
+
+    background:
+        var(--purple);
+
+    border-color:
+        var(--purple);
+
+    transform:
+        scale(1.08);
+
+    animation-name:
+        checkbox-pop;
+
+    animation-duration:
+        320ms;
+
+    animation-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+.checkbox input:checked
++ .check-box::after {
+
+    opacity:
+        1;
+
+    transform:
+        rotate(45deg)
+        scale(1);
+
+}
+
+
+@keyframes checkbox-pop {
+
+    0% {
+        transform:
+            scale(0.78);
+    }
+
+    60% {
+        transform:
+            scale(1.14);
+    }
+
+    100% {
+        transform:
+            scale(1.08);
+    }
+}
+
+
+/* ==================================================
+   CHECKBOX TEXT
+================================================== */
+
+.checkbox-text {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        3px;
+}
+
+
+.checkbox-text strong {
+    font-size:
+        0.95rem;
+}
+
+
+.checkbox-text small {
+    color:
+        #858079;
+
+    font-size:
+        0.78rem;
+}
+
+
+/* ==================================================
+   ACTIONS
+================================================== */
+
+.actions {
+    display:
+        grid;
+
+    grid-template-columns:
+        76px 1fr;
+
+    gap:
+        14px;
+}
+
+
+/* ==================================================
+   COPY
+================================================== */
+
+.copy-button {
+    position:
+        relative;
+
+    width:
+        76px;
+
+    height:
+        58px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid #ded9d1;
+
+    border-radius:
+        16px;
+
+    color:
+        var(--purple);
+
+    cursor:
+        pointer;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    transition-property:
+        transform,
+        background-color,
+        border-color,
+        box-shadow,
+        color;
+
+    transition-duration:
+        220ms;
+
+    transition-timing-function:
+        ease;
+}
+
+
+.copy-button:hover {
+    background:
+        var(--purple-light);
+
+    border-color:
+        var(--purple);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(
+            124,
+            58,
+            237,
+            0.10
+        );
+}
+
+
+.copy-button:active {
+    transform:
+        scale(0.95);
+}
+
+
+.copy-button.disabled {
+    background:
+        #f1f0ee;
+
+    border-color:
+        #e2dfda;
+
+    color:
+        #b5b0a9;
+
+    cursor:
+        not-allowed;
+
+    box-shadow:
+        none;
+}
+
+
+.copy-button.disabled:hover {
+    background:
+        #f1f0ee;
+
+    border-color:
+        #e2dfda;
+
+    color:
+        #b5b0a9;
+
+    transform:
+        none;
+
+    box-shadow:
+        none;
+}
+
+
+.copy-icon {
+    width:
+        25px;
+
+    height:
+        25px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.8;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+    transition-property:
+        opacity,
+        transform;
+
+    transition-duration:
+        220ms;
+
+    transition-timing-function:
+        ease;
+}
+
+
+.copy-check {
+    position:
+        absolute;
+
+    font-size:
+        1.5rem;
+
+    font-weight:
+        700;
+
+    opacity:
+        0;
+
+    transform:
+        scale(0.5);
+
+    transition-property:
+        opacity,
+        transform;
+
+    transition-duration:
+        220ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+.copy-button.copied {
+    color:
+        var(--purple);
+
+    border-color:
+        var(--purple);
+
+    background:
+        var(--purple-light);
+}
+
+
+.copy-button.copied
+.copy-icon {
+
+    opacity:
+        0;
+
+    transform:
+        scale(0.5);
+}
+
+
+.copy-button.copied
+.copy-check {
+
+    opacity:
+        1;
+
+    transform:
+        scale(1);
+}
+
+
+/* ==================================================
+   GENERATE
+================================================== */
+
+.primary-button {
+
+    min-height:
+        58px;
+
+    background:
+        var(--purple);
+
+    border:
+        none;
+
+    border-radius:
+        16px;
+
+    color:
+        #ffffff;
+
+    font-size:
+        0.95rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 8px 22px rgba(
+            124,
+            58,
+            237,
+            0.24
+        );
+
+    transition-property:
+        transform,
+        background-color,
+        box-shadow;
+
+    transition-duration:
+        220ms;
+
+    transition-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+}
+
+
+.primary-button:hover {
+    background:
+        var(--purple-dark);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(
+            124,
+            58,
+            237,
+            0.30
+        );
+}
+
+
+.primary-button:active {
+    transform:
+        scale(0.99);
+}
+
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+footer {
+
+    padding:
+        30px 0 50px;
+
+    color:
+        #8a857d;
+
+    font-size:
+        0.85rem;
+
+    text-align:
+        center;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 800px) {
+
+    .settings-layout {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            25px;
+    }
+
+
+    .length-section {
+
+        padding-right:
+            0;
+
+        padding-bottom:
+            25px;
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid #e8e4dc;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .container {
+        width:
+            92%;
+    }
+
+
+    .hero {
+        padding-top:
+            60px;
+    }
+
+
+    .hero h1 {
+        font-size:
+            3.5rem;
+    }
+
+
+    .password-card {
+        padding:
+            20px;
+
+        border-radius:
+            22px;
+    }
+
+
+    .password-row {
+        gap:
+            12px;
+    }
+
+
+    .password-output p {
+        font-size:
+            1.15rem;
+    }
+
+
+    .eye-button {
+        width:
+            78px;
+
+        height:
+            54px;
+
+        border-radius:
+            16px;
+    }
+
+
+    .eye-face {
+        width:
+            58px;
+
+        height:
+            32px;
+
+        gap:
+            5px;
+    }
+
+
+    .eye-ball {
+        width:
+            24px;
+
+        height:
+            24px;
+    }
+
+
+    .eye-pupil {
+        width:
+            10px;
+
+        height:
+            14px;
+    }
+
+
+    .options {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .actions {
+        grid-template-columns:
+            64px 1fr;
+    }
+
+
+    .copy-button {
+        width:
+            64px;
+    }
+
+}

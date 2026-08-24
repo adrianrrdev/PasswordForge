@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Password Forge</title>
+
+
+    <!-- =========================
+         GOOGLE FONTS
+    ========================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bungee&family=Lexend+Deca:wght@400;500;600;700&family=Spline+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================
+         CSS
+    ========================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- =========================
+         FAVICON
+    ========================== -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="icono.png"
+    >
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+
+        <!-- =========================
+             HERO
+        ========================== -->
+
+        <section class="hero">
+
+            <p class="eyebrow">
+                PROJECT Z · TOOL #001
+            </p>
+
+
+            <h1>
+                Password Forge
+            </h1>
+
+
+            <p class="subtitle">
+                Create strong and secure passwords in seconds.
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             PASSWORD CARD
+        ========================== -->
+
+        <section class="password-card">
+
+
+            <!-- =========================
+                 PASSWORD
+            ========================== -->
+
+            <div class="password-section">
+
+                <span class="section-label">
+                    Password
+                </span>
+
+
+                <div class="password-output">
+
+                    <div class="password-row">
+
+
+                        <p
+                            id="passwordDisplay"
+                            aria-live="polite"
+                        >
+                            ••••••••••••••••
+                        </p>
+
+
+
+                        <!-- =========================
+                             EYES
+                        ========================== -->
+
+                        <button
+                            type="button"
+                            class="eye-button"
+                            id="eyeButton"
+                            onclick="mostrarOcultarPassword()"
+                            aria-label="Show password"
+                            aria-pressed="false"
+                            title="Show password"
+                        >
+
+                            <div class="eye-face">
+
+                                <div class="eye-ball">
+                                    <div class="eye-pupil"></div>
+                                </div>
+
+
+                                <div class="eye-ball">
+                                    <div class="eye-pupil"></div>
+                                </div>
+
+                            </div>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 SETTINGS
+            ========================== -->
+
+            <div class="settings-layout">
+
+
+                <!-- =========================
+                     LENGTH
+                ========================== -->
+
+                <div class="length-section">
+
+                    <span class="section-label">
+                        Length
+                    </span>
+
+
+                    <input
+                        type="number"
+                        id="longitud"
+                        min="4"
+                        max="64"
+                        value="16"
+                        aria-label="Password length"
+                    >
+
+                </div>
+
+
+
+                <!-- =========================
+                     CHARACTER SET
+                ========================== -->
+
+                <div class="character-section">
+
+                    <span class="section-label">
+                        Character Set
+                    </span>
+
+
+                    <div class="options">
+
+
+                        <!-- UPPERCASE -->
+
+                        <label class="checkbox">
+
+                            <input
+                                type="checkbox"
+                                id="mayusculas"
+                                checked
+                            >
+
+                            <span class="check-box"></span>
+
+                            <span class="checkbox-text">
+
+                                <strong>
+                                    Uppercase
+                                </strong>
+
+                                <small>
+                                    A–Z
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+
+                        <!-- LOWERCASE -->
+
+                        <label class="checkbox">
+
+                            <input
+                                type="checkbox"
+                                id="minusculas"
+                                checked
+                            >
+
+                            <span class="check-box"></span>
+
+                            <span class="checkbox-text">
+
+                                <strong>
+                                    Lowercase
+                                </strong>
+
+                                <small>
+                                    a–z
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+
+                        <!-- NUMBERS -->
+
+                        <label class="checkbox">
+
+                            <input
+                                type="checkbox"
+                                id="numeros"
+                                checked
+                            >
+
+                            <span class="check-box"></span>
+
+                            <span class="checkbox-text">
+
+                                <strong>
+                                    Numbers
+                                </strong>
+
+                                <small>
+                                    0–9
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+
+                        <!-- SYMBOLS -->
+
+                        <label class="checkbox">
+
+                            <input
+                                type="checkbox"
+                                id="simbolos"
+                                checked
+                            >
+
+                            <span class="check-box"></span>
+
+                            <span class="checkbox-text">
+
+                                <strong>
+                                    Symbols
+                                </strong>
+
+                                <small>
+                                    !@#$...
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 ACTIONS
+            ========================== -->
+
+            <div class="actions">
+
+
+                <!-- COPY -->
+
+                <button
+                    type="button"
+                    class="copy-button disabled"
+                    id="copyButton"
+                    onclick="copiarPassword()"
+                    aria-label="Copy password"
+                    title="Copy password"
+                >
+
+                    <svg
+                        class="copy-icon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <rect
+                            x="8"
+                            y="8"
+                            width="10"
+                            height="10"
+                            rx="2"
+                        ></rect>
+
+                        <path
+                            d="
+                                M6 16H5
+                                A2 2 0 0 1 3 14
+                                V5
+                                A2 2 0 0 1 5 3
+                                H14
+                                A2 2 0 0 1 16 5
+                                V6
+                            "
+                        ></path>
+
+                    </svg>
+
+
+                    <span
+                        class="copy-check"
+                        aria-hidden="true"
+                    >
+                        ✓
+                    </span>
+
+                </button>
+
+
+
+                <!-- GENERATE -->
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    onclick="generarPassword()"
+                >
+                    Generate password
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer>
+
+            Built with HTML & CSS · ProyectoZ
+
+        </footer>
+
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
