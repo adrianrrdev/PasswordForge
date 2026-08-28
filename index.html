@@ -34,7 +34,9 @@
     >
 
 
-    <!-- CSS -->
+    <!-- =========================
+         CSS
+    ========================== -->
 
     <link
         rel="stylesheet"
@@ -42,7 +44,9 @@
     >
 
 
-    <!-- FAVICON -->
+    <!-- =========================
+         FAVICON
+    ========================== -->
 
     <link
         rel="icon"
@@ -64,17 +68,58 @@
 
         <section class="hero">
 
-            <p class="eyebrow">
-                PROJECT Z · TOOL #001
-            </p>
+
+            <div class="hero-top">
+
+                <p
+                    class="eyebrow"
+                    data-i18n="eyebrow"
+                >
+                    PROJECT Z · TOOL #001
+                </p>
 
 
-            <h1>
+                <!-- LANGUAGE SELECTOR -->
+
+                <label
+                    class="language-selector"
+                    for="language"
+                >
+
+                    <span class="language-icon">
+                        ◎
+                    </span>
+
+                    <select
+                        id="language"
+                        onchange="cambiarIdioma()"
+                        aria-label="Language"
+                    >
+
+                        <option value="en">
+                            EN
+                        </option>
+
+                        <option value="es">
+                            ES
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+
+            <h1 data-i18n="title">
                 Password Forge
             </h1>
 
 
-            <p class="subtitle">
+            <p
+                class="subtitle"
+                data-i18n="subtitle"
+            >
                 Create strong and secure passwords in seconds.
             </p>
 
@@ -89,11 +134,16 @@
         <section class="password-card">
 
 
-            <!-- PASSWORD -->
+            <!-- =========================
+                 PASSWORD
+            ========================== -->
 
             <div class="password-section">
 
-                <span class="section-label">
+                <span
+                    class="section-label"
+                    data-i18n="passwordLabel"
+                >
                     Password
                 </span>
 
@@ -127,18 +177,14 @@
 
                                 <div class="eye-ball">
 
-                                    <div
-                                        class="eye-pupil"
-                                    ></div>
+                                    <div class="eye-pupil"></div>
 
                                 </div>
 
 
                                 <div class="eye-ball">
 
-                                    <div
-                                        class="eye-pupil"
-                                    ></div>
+                                    <div class="eye-pupil"></div>
 
                                 </div>
 
@@ -151,7 +197,9 @@
                 </div>
 
 
-                <!-- PASSWORD STRENGTH -->
+                <!-- =========================
+                     PASSWORD STRENGTH
+                ========================== -->
 
                 <div
                     class="strength"
@@ -160,9 +208,10 @@
 
                     <div class="strength-header">
 
-                        <span>
+                        <span data-i18n="strengthLabel">
                             Password strength
                         </span>
+
 
                         <strong id="strengthText">
                             Waiting
@@ -215,7 +264,10 @@
 
                 <div class="length-section">
 
-                    <span class="section-label">
+                    <span
+                        class="section-label"
+                        data-i18n="lengthLabel"
+                    >
                         Length
                     </span>
 
@@ -237,7 +289,10 @@
 
                 <div class="character-section">
 
-                    <span class="section-label">
+                    <span
+                        class="section-label"
+                        data-i18n="characterSetLabel"
+                    >
                         Character Set
                     </span>
 
@@ -257,9 +312,10 @@
 
                             <span class="check-box"></span>
 
+
                             <span class="checkbox-text">
 
-                                <strong>
+                                <strong data-i18n="uppercase">
                                     Uppercase
                                 </strong>
 
@@ -285,9 +341,10 @@
 
                             <span class="check-box"></span>
 
+
                             <span class="checkbox-text">
 
-                                <strong>
+                                <strong data-i18n="lowercase">
                                     Lowercase
                                 </strong>
 
@@ -313,9 +370,10 @@
 
                             <span class="check-box"></span>
 
+
                             <span class="checkbox-text">
 
-                                <strong>
+                                <strong data-i18n="numbers">
                                     Numbers
                                 </strong>
 
@@ -341,9 +399,10 @@
 
                             <span class="check-box"></span>
 
+
                             <span class="checkbox-text">
 
-                                <strong>
+                                <strong data-i18n="symbols">
                                     Symbols
                                 </strong>
 
@@ -396,6 +455,7 @@
                             rx="2"
                         ></rect>
 
+
                         <path
                             d="
                                 M6 16H5
@@ -428,6 +488,7 @@
                     type="button"
                     class="primary-button"
                     onclick="generarPassword()"
+                    data-i18n="generate"
                 >
                     Generate password
                 </button>
@@ -440,9 +501,13 @@
 
 
 
-        <footer>
+        <!-- =========================
+             FOOTER
+        ========================== -->
 
-            Built with HTML & CSS · ProyectoZ
+        <footer data-i18n="footer">
+
+            Built with HTML & CSS & JAVASCRIPT · ProyectoZ
 
         </footer>
 

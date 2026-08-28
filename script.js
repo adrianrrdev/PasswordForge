@@ -32,6 +32,9 @@ let strength3 =
 let strength4 =
     document.getElementById("strength4");
 
+let language =
+    document.getElementById("language");
+
 
 /* ==================================================
    CARACTERES
@@ -61,6 +64,397 @@ let caracteres = {
 let passwordActual = "";
 
 let passwordVisible = false;
+
+let idiomaActual = "en";
+
+
+/* ==================================================
+   TRADUCCIONES
+================================================== */
+
+let traducciones = {
+
+    en: {
+
+        eyebrow:
+            "PROJECT Z · TOOL #001",
+
+        title:
+            "Password Forge",
+
+        subtitle:
+            "Create strong and secure passwords in seconds.",
+
+        passwordLabel:
+            "Password",
+
+        strengthLabel:
+            "Password strength",
+
+        lengthLabel:
+            "Length",
+
+        characterSetLabel:
+            "Character Set",
+
+        uppercase:
+            "Uppercase",
+
+        lowercase:
+            "Lowercase",
+
+        numbers:
+            "Numbers",
+
+        symbols:
+            "Symbols",
+
+        generate:
+            "Generate password",
+
+        footer:
+            "Built with HTML & CSS · ProyectoZ",
+
+        waiting:
+            "Waiting",
+
+        veryWeak:
+            "Very weak",
+
+        weak:
+            "Weak",
+
+        medium:
+            "Medium",
+
+        strong:
+            "Strong",
+
+        veryStrong:
+            "Very strong",
+
+        generateFirst:
+            "Generate a password first",
+
+        lengthError:
+            "Length must be 4–64",
+
+        selectOption:
+            "Select at least one option",
+
+        showPassword:
+            "Show password",
+
+        hidePassword:
+            "Hide password",
+
+        copyPassword:
+            "Copy password"
+
+    },
+
+
+    es: {
+
+        eyebrow:
+            "PROJECT Z · HERRAMIENTA #001",
+
+        title:
+            "Password Forge",
+
+        subtitle:
+            "Crea contraseñas seguras y resistentes en segundos.",
+
+        passwordLabel:
+            "Contraseña",
+
+        strengthLabel:
+            "Seguridad de la contraseña",
+
+        lengthLabel:
+            "Longitud",
+
+        characterSetLabel:
+            "Conjunto de caracteres",
+
+        uppercase:
+            "Mayúsculas",
+
+        lowercase:
+            "Minúsculas",
+
+        numbers:
+            "Números",
+
+        symbols:
+            "Símbolos",
+
+        generate:
+            "Generar contraseña",
+
+        footer:
+            "Hecho con HTML y CSS · ProyectoZ",
+
+        waiting:
+            "Esperando",
+
+        veryWeak:
+            "Muy débil",
+
+        weak:
+            "Débil",
+
+        medium:
+            "Media",
+
+        strong:
+            "Fuerte",
+
+        veryStrong:
+            "Muy fuerte",
+
+        generateFirst:
+            "Genera una contraseña primero",
+
+        lengthError:
+            "La longitud debe ser de 4 a 64",
+
+        selectOption:
+            "Selecciona al menos una opción",
+
+        showPassword:
+            "Mostrar contraseña",
+
+        hidePassword:
+            "Ocultar contraseña",
+
+        copyPassword:
+            "Copiar contraseña"
+
+    }
+
+};
+
+
+/* ==================================================
+   DETECTAR IDIOMA
+================================================== */
+
+function detectarIdioma() {
+
+    let idiomaGuardado =
+        localStorage.getItem(
+            "passwordForgeLanguage"
+        );
+
+
+    if (
+        idiomaGuardado === "es" ||
+        idiomaGuardado === "en"
+    ) {
+
+        return idiomaGuardado;
+
+    }
+
+
+    let idiomasNavegador =
+        navigator.languages || [
+            navigator.language
+        ];
+
+
+    for (
+        let i = 0;
+        i < idiomasNavegador.length;
+        i++
+    ) {
+
+        let idioma =
+            idiomasNavegador[i]
+            .toLowerCase()
+            .split("-")[0];
+
+
+        if (
+            idioma === "es" ||
+            idioma === "en"
+        ) {
+
+            return idioma;
+
+        }
+
+    }
+
+
+    return "en";
+
+}
+
+
+/* ==================================================
+   CAMBIAR IDIOMA
+================================================== */
+
+function cambiarIdioma() {
+
+    idiomaActual =
+        language.value;
+
+
+    localStorage.setItem(
+        "passwordForgeLanguage",
+        idiomaActual
+    );
+
+
+    aplicarIdioma();
+
+}
+
+
+/* ==================================================
+   APLICAR IDIOMA
+================================================== */
+
+function aplicarIdioma() {
+
+    let textos =
+        traducciones[
+            idiomaActual
+        ];
+
+
+    let elementos =
+        document.querySelectorAll(
+            "[data-i18n]"
+        );
+
+
+    for (
+        let i = 0;
+        i < elementos.length;
+        i++
+    ) {
+
+        let clave =
+            elementos[i].getAttribute(
+                "data-i18n"
+            );
+
+
+        if (
+            textos[clave]
+        ) {
+
+            elementos[i].textContent =
+                textos[clave];
+
+        }
+
+    }
+
+
+    document.documentElement.lang =
+        idiomaActual;
+
+
+    actualizarTextosDinamicos();
+
+
+    actualizarAtributos();
+
+}
+
+
+/* ==================================================
+   TEXTOS DINÁMICOS
+================================================== */
+
+function actualizarTextosDinamicos() {
+
+    let textos =
+        traducciones[
+            idiomaActual
+        ];
+
+
+    if (
+        passwordActual === ""
+    ) {
+
+        strengthText.textContent =
+            textos.waiting;
+
+        return;
+
+    }
+
+
+    actualizarFortaleza();
+
+}
+
+
+/* ==================================================
+   ATRIBUTOS
+================================================== */
+
+function actualizarAtributos() {
+
+    let textos =
+        traducciones[
+            idiomaActual
+        ];
+
+
+    if (
+        passwordVisible
+    ) {
+
+        eyeButton.setAttribute(
+            "aria-label",
+            textos.hidePassword
+        );
+
+        eyeButton.setAttribute(
+            "title",
+            textos.hidePassword
+        );
+
+    } else {
+
+        eyeButton.setAttribute(
+            "aria-label",
+            textos.showPassword
+        );
+
+        eyeButton.setAttribute(
+            "title",
+            textos.showPassword
+        );
+
+    }
+
+
+    copyButton.setAttribute(
+        "aria-label",
+        textos.copyPassword
+    );
+
+    copyButton.setAttribute(
+        "title",
+        textos.copyPassword
+    );
+
+
+    longitud.setAttribute(
+        "aria-label",
+        textos.lengthLabel
+    );
+
+}
 
 
 /* ==================================================
@@ -124,9 +518,7 @@ function generarPassword() {
         Number(longitud.value);
 
 
-    /* =========================
-       VALIDAR LONGITUD
-    ========================== */
+    /* VALIDACIÓN */
 
     if (
         Number.isNaN(
@@ -140,30 +532,36 @@ function generarPassword() {
 
         passwordVisible = false;
 
+
         passwordDisplay.textContent =
-            "Length must be 4–64";
+            traducciones[
+                idiomaActual
+            ].lengthError;
+
 
         eyeButton.classList.remove(
             "is-visible"
         );
+
 
         eyeButton.setAttribute(
             "aria-pressed",
             "false"
         );
 
+
         actualizarEstadoCopy();
 
         resetStrength();
+
+        actualizarAtributos();
 
         return;
 
     }
 
 
-    /* =========================
-       LEER OPCIONES
-    ========================== */
+    /* OPCIONES */
 
     let opciones = {
 
@@ -190,9 +588,7 @@ function generarPassword() {
     };
 
 
-    /* =========================
-       CARACTERES DISPONIBLES
-    ========================== */
+    /* CARACTERES DISPONIBLES */
 
     let disponibles = "";
 
@@ -237,9 +633,7 @@ function generarPassword() {
     }
 
 
-    /* =========================
-       NINGUNA OPCIÓN
-    ========================== */
+    /* NINGUNA OPCIÓN */
 
     if (
         disponibles === ""
@@ -249,37 +643,41 @@ function generarPassword() {
 
         passwordVisible = false;
 
+
         passwordDisplay.textContent =
-            "Select at least one option";
+            traducciones[
+                idiomaActual
+            ].selectOption;
+
 
         eyeButton.classList.remove(
             "is-visible"
         );
+
 
         eyeButton.setAttribute(
             "aria-pressed",
             "false"
         );
 
+
         actualizarEstadoCopy();
 
         resetStrength();
+
+        actualizarAtributos();
 
         return;
 
     }
 
 
-    /* =========================
-       NUEVA PASSWORD
-    ========================== */
+    /* PASSWORD */
 
     let nuevaPassword = "";
 
 
-    /* =========================
-       GARANTIZAR CATEGORÍAS
-    ========================== */
+    /* GARANTIZAR CATEGORÍAS */
 
     if (
         opciones.mayusculas
@@ -329,12 +727,11 @@ function generarPassword() {
     }
 
 
-    /* =========================
-       COMPLETAR LONGITUD
-    ========================== */
+    /* COMPLETAR */
 
     while (
-        nuevaPassword.length <
+        nuevaPassword.length
+        <
         longitudPassword
     ) {
 
@@ -346,9 +743,7 @@ function generarPassword() {
     }
 
 
-    /* =========================
-       MEZCLAR
-    ========================== */
+    /* MEZCLAR */
 
     nuevaPassword =
         mezclarPassword(
@@ -356,13 +751,16 @@ function generarPassword() {
         );
 
 
-    /* =========================
-       GUARDAR
-    ========================== */
+    /* GUARDAR */
 
     passwordActual =
         nuevaPassword;
 
+
+    /*
+        Cada nueva contraseña
+        comienza oculta.
+    */
 
     passwordVisible =
         false;
@@ -385,6 +783,8 @@ function generarPassword() {
 
     actualizarFortaleza();
 
+    actualizarAtributos();
+
 
     copyButton.classList.remove(
         "copied"
@@ -394,7 +794,7 @@ function generarPassword() {
 
 
 /* ==================================================
-   MEZCLAR
+   MEZCLAR PASSWORD
 ================================================== */
 
 function mezclarPassword(password) {
@@ -511,7 +911,9 @@ function mostrarOcultarPassword() {
     ) {
 
         passwordDisplay.textContent =
-            "Generate a password first";
+            traducciones[
+                idiomaActual
+            ].generateFirst;
 
         return;
 
@@ -535,11 +937,13 @@ function mostrarOcultarPassword() {
 
     actualizarPassword();
 
+    actualizarAtributos();
+
 }
 
 
 /* ==================================================
-   COPIAR
+   COPIAR PASSWORD
 ================================================== */
 
 function copiarPassword() {
@@ -549,7 +953,9 @@ function copiarPassword() {
     ) {
 
         passwordDisplay.textContent =
-            "Generate a password first";
+            traducciones[
+                idiomaActual
+            ].generateFirst;
 
         return;
 
@@ -632,7 +1038,7 @@ function calcularFortaleza(password) {
     }
 
 
-    /* TIPOS DE CARACTERES */
+    /* TIPOS */
 
     let tipos = 0;
 
@@ -720,12 +1126,18 @@ function actualizarFortaleza() {
     resetStrength();
 
 
+    let textos =
+        traducciones[
+            idiomaActual
+        ];
+
+
     if (
         score === 0
     ) {
 
         strengthText.textContent =
-            "Very weak";
+            textos.veryWeak;
 
         strength.classList.add(
             "weak"
@@ -743,7 +1155,7 @@ function actualizarFortaleza() {
     ) {
 
         strengthText.textContent =
-            "Weak";
+            textos.weak;
 
         strength.classList.add(
             "weak"
@@ -761,7 +1173,7 @@ function actualizarFortaleza() {
     ) {
 
         strengthText.textContent =
-            "Medium";
+            textos.medium;
 
         strength.classList.add(
             "medium"
@@ -779,7 +1191,7 @@ function actualizarFortaleza() {
     ) {
 
         strengthText.textContent =
-            "Strong";
+            textos.strong;
 
         strength.classList.add(
             "strong"
@@ -793,11 +1205,13 @@ function actualizarFortaleza() {
 
 
     strengthText.textContent =
-        "Very strong";
+        textos.veryStrong;
+
 
     strength.classList.add(
         "very-strong"
     );
+
 
     activarSegmentos(4);
 
@@ -843,7 +1257,7 @@ function activarSegmentos(cantidad) {
 
 
 /* ==================================================
-   RESET FORTALEZA
+   RESET STRENGTH
 ================================================== */
 
 function resetStrength() {
@@ -880,15 +1294,26 @@ function resetStrength() {
 
 
     strengthText.textContent =
-        "Waiting";
+        traducciones[
+            idiomaActual
+        ].waiting;
 
 }
 
 
 /* ==================================================
-   ESTADO INICIAL
+   INICIAR IDIOMA
 ================================================== */
 
-actualizarEstadoCopy();
+idiomaActual =
+    detectarIdioma();
 
-resetStrength();
+
+language.value =
+    idiomaActual;
+
+
+aplicarIdioma();
+
+
+actualizarEstadoCopy();

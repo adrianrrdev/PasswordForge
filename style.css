@@ -20,19 +20,13 @@
     --card: #ffffff;
 
     --purple: #7c3aed;
-
     --purple-dark: #6d28d9;
-
     --purple-light: #f2efff;
 
-    --purple-soft: #eee7ff;
-
     --black: #171717;
-
     --gray: #66615b;
 
     --border: #e6e3dc;
-
     --soft-border: #ded9d1;
 
 }
@@ -51,18 +45,25 @@ body {
 
     min-height: 100vh;
 
-    background: var(--background);
+    background:
+        var(--background);
 
-    color: var(--black);
+    color:
+        var(--black);
 
-    font-family: "Spline Sans", sans-serif;
+    font-family:
+        "Spline Sans",
+        sans-serif;
 
 }
 
 
 button,
-input {
+input,
+select {
+
     font: inherit;
+
 }
 
 
@@ -72,9 +73,14 @@ input {
 
 .container {
 
-    width: min(1100px, 90%);
+    width:
+        min(
+            1100px,
+            90%
+        );
 
-    margin: 0 auto;
+    margin:
+        0 auto;
 
 }
 
@@ -85,9 +91,30 @@ input {
 
 .hero {
 
-    max-width: 900px;
+    max-width:
+        900px;
 
-    padding: 90px 0 55px;
+    padding:
+        70px 0 55px;
+
+}
+
+
+/* Top line */
+
+.hero-top {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
 
 }
 
@@ -98,15 +125,143 @@ input {
 
 .eyebrow {
 
-    margin-bottom: 24px;
+    margin-bottom:
+        24px;
 
-    color: var(--purple);
+    color:
+        var(--purple);
 
-    font-family: "Bungee", sans-serif;
+    font-family:
+        "Bungee",
+        sans-serif;
 
-    font-size: 0.75rem;
+    font-size:
+        0.75rem;
 
-    letter-spacing: 0.08em;
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* ==================================================
+   LANGUAGE SELECTOR
+================================================== */
+
+.language-selector {
+
+    height:
+        40px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    padding:
+        0 10px;
+
+    margin-bottom:
+        24px;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        12px;
+
+    color:
+        var(--purple);
+
+    box-shadow:
+        0 4px 14px rgba(
+            0,
+            0,
+            0,
+            0.04
+        );
+
+    transition-property:
+        border-color,
+        box-shadow,
+        transform;
+
+    transition-duration:
+        200ms;
+
+    transition-timing-function:
+        ease;
+
+}
+
+
+.language-selector:hover {
+
+    border-color:
+        rgba(
+            124,
+            58,
+            237,
+            0.35
+        );
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 6px 18px rgba(
+            0,
+            0,
+            0,
+            0.06
+        );
+
+}
+
+
+.language-icon {
+
+    font-size:
+        0.9rem;
+
+}
+
+
+.language-selector select {
+
+    appearance:
+        none;
+
+    border:
+        none;
+
+    outline:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        var(--purple);
+
+    font-size:
+        0.75rem;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.05em;
+
+    cursor:
+        pointer;
 
 }
 
@@ -117,23 +272,31 @@ input {
 
 .hero h1 {
 
-    margin-bottom: 30px;
+    margin-bottom:
+        30px;
 
-    font-family: "Bungee", sans-serif;
+    font-family:
+        "Bungee",
+        sans-serif;
 
-    font-size: clamp(
-        3.5rem,
-        8vw,
-        7rem
-    );
+    font-size:
+        clamp(
+            3.5rem,
+            8vw,
+            7rem
+        );
 
-    font-weight: 400;
+    font-weight:
+        400;
 
-    line-height: 0.9;
+    line-height:
+        0.9;
 
-    letter-spacing: -0.06em;
+    letter-spacing:
+        -0.06em;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 
 }
 
@@ -144,32 +307,42 @@ input {
 
 .subtitle {
 
-    max-width: 560px;
+    max-width:
+        560px;
 
-    color: var(--gray);
+    color:
+        var(--gray);
 
-    font-family: "Lexend Deca", sans-serif;
+    font-family:
+        "Lexend Deca",
+        sans-serif;
 
-    font-size: 1.1rem;
+    font-size:
+        1.1rem;
 
-    line-height: 1.6;
+    line-height:
+        1.6;
 
 }
 
 
 /* ==================================================
-   PASSWORD CARD
+   CARD
 ================================================== */
 
 .password-card {
 
-    padding: 34px;
+    padding:
+        34px;
 
-    background: var(--card);
+    background:
+        var(--card);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid var(--border);
 
-    border-radius: 28px;
+    border-radius:
+        28px;
 
     box-shadow:
         0 20px 60px rgba(
@@ -205,48 +378,54 @@ input {
 
 
 /* ==================================================
-   SECTION LABEL
+   LABEL
 ================================================== */
 
 .section-label {
 
-    display: block;
+    display:
+        block;
 
-    margin-bottom: 12px;
+    margin-bottom:
+        12px;
 
-    color: var(--purple);
+    color:
+        var(--purple);
 
-    font-size: 0.85rem;
+    font-size:
+        0.85rem;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
-    letter-spacing: 0.08em;
+    letter-spacing:
+        0.08em;
 
-    text-transform: uppercase;
+    text-transform:
+        uppercase;
 
 }
 
 
 /* ==================================================
-   PASSWORD SECTION
+   PASSWORD
 ================================================== */
 
 .password-section {
 
-    margin-bottom: 32px;
+    margin-bottom:
+        32px;
 
 }
 
 
-/* ==================================================
-   PASSWORD OUTPUT
-================================================== */
-
 .password-output {
 
-    padding: 22px 24px;
+    padding:
+        22px 24px;
 
-    background: var(--purple-light);
+    background:
+        var(--purple-light);
 
     border:
         1px solid rgba(
@@ -256,45 +435,55 @@ input {
             0.08
         );
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
 }
 
-
-/* Password row */
 
 .password-row {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    gap: 20px;
+    gap:
+        20px;
 
 }
 
 
-/* Password text */
-
 .password-output p {
 
-    flex: 1;
+    flex:
+        1;
 
-    min-width: 0;
+    min-width:
+        0;
 
-    overflow-wrap: anywhere;
+    overflow-wrap:
+        anywhere;
 
-    color: var(--black);
+    color:
+        var(--black);
 
-    font-family: "Lexend Deca", sans-serif;
+    font-family:
+        "Lexend Deca",
+        sans-serif;
 
-    font-size: 1.45rem;
+    font-size:
+        1.45rem;
 
-    font-weight: 600;
+    font-weight:
+        600;
 
-    letter-spacing: 0.08em;
+    letter-spacing:
+        0.08em;
 
     transition-property:
         opacity,
@@ -315,27 +504,38 @@ input {
 
 .eye-button {
 
-    width: 100px;
+    width:
+        100px;
 
-    height: 62px;
+    height:
+        62px;
 
-    flex-shrink: 0;
+    flex-shrink:
+        0;
 
-    padding: 0;
+    padding:
+        0;
 
-    background: var(--purple);
+    background:
+        var(--purple);
 
-    border: none;
+    border:
+        none;
 
-    border-radius: 18px;
+    border-radius:
+        18px;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
     box-shadow:
         0 8px 20px rgba(
@@ -394,40 +594,55 @@ input {
 
 .eye-face {
 
-    width: 72px;
+    width:
+        72px;
 
-    height: 38px;
+    height:
+        38px;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
-    gap: 7px;
+    gap:
+        7px;
 
 }
 
 
 .eye-ball {
 
-    position: relative;
+    position:
+        relative;
 
-    width: 29px;
+    width:
+        29px;
 
-    height: 29px;
+    height:
+        29px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    background: #ffffff;
+    background:
+        #ffffff;
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: center;
+    justify-content:
+        center;
 
     transition-property:
         transform;
@@ -448,19 +663,26 @@ input {
 
 .eye-pupil {
 
-    position: absolute;
+    position:
+        absolute;
 
-    top: 50%;
+    top:
+        50%;
 
-    left: 50%;
+    left:
+        50%;
 
-    width: 11px;
+    width:
+        11px;
 
-    height: 14px;
+    height:
+        14px;
 
-    background: var(--black);
+    background:
+        var(--black);
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 
     transform:
         translate(
@@ -499,9 +721,11 @@ input {
 .eye-button:not(.is-visible)
 .eye-pupil {
 
-    width: 10px;
+    width:
+        10px;
 
-    height: 13px;
+    height:
+        13px;
 
     transform:
         translate(
@@ -525,9 +749,11 @@ input {
 .eye-button.is-visible
 .eye-pupil {
 
-    width: 13px;
+    width:
+        13px;
 
-    height: 18px;
+    height:
+        18px;
 
     transform:
         translate(
@@ -562,62 +788,80 @@ input {
 @keyframes eye-look {
 
     0% {
+
         transform:
             scale(0.82);
+
     }
 
     55% {
+
         transform:
             scale(1.08);
+
     }
 
     100% {
+
         transform:
             scale(1);
+
     }
 
 }
 
 
 /* ==================================================
-   PASSWORD STRENGTH
+   STRENGTH
 ================================================== */
 
 .strength {
 
-    margin-top: 14px;
+    margin-top:
+        14px;
 
-    padding: 0 4px;
+    padding:
+        0 4px;
 
 }
 
 
 .strength-header {
 
-    display: flex;
+    display:
+        flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    gap: 20px;
+    gap:
+        20px;
 
-    margin-bottom: 8px;
+    margin-bottom:
+        8px;
 
-    color: #858079;
+    color:
+        #858079;
 
-    font-size: 0.78rem;
+    font-size:
+        0.78rem;
 
 }
 
 
 .strength-header strong {
 
-    color: var(--black);
+    color:
+        var(--black);
 
-    font-size: 0.8rem;
+    font-size:
+        0.8rem;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
     transition-property:
         transform,
@@ -634,25 +878,34 @@ input {
 
 .strength-bar {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4, 1fr);
 
-    gap: 5px;
+    gap:
+        5px;
 
 }
 
 
 .strength-segment {
 
-    height: 6px;
+    height:
+        6px;
 
-    background: #e4e0da;
+    background:
+        #e4e0da;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
-    transform: scaleY(1);
+    transform:
+        scaleY(1);
+
+    opacity:
+        0.7;
 
     transition-property:
         background-color,
@@ -670,8 +923,6 @@ input {
             1
         );
 
-    opacity: 0.7;
-
 }
 
 
@@ -680,7 +931,8 @@ input {
     transform:
         scaleY(1.35);
 
-    opacity: 1;
+    opacity:
+        1;
 
     animation-name:
         strength-pop;
@@ -702,18 +954,24 @@ input {
 @keyframes strength-pop {
 
     0% {
+
         transform:
             scaleY(1);
+
     }
 
     50% {
+
         transform:
             scaleY(1.6);
+
     }
 
     100% {
+
         transform:
             scaleY(1.35);
+
     }
 
 }
@@ -761,14 +1019,17 @@ input {
 
 .settings-layout {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         180px 1fr;
 
-    gap: 40px;
+    gap:
+        40px;
 
-    margin-bottom: 30px;
+    margin-bottom:
+        30px;
 
 }
 
@@ -779,7 +1040,8 @@ input {
 
 .length-section {
 
-    padding-right: 30px;
+    padding-right:
+        30px;
 
     border-right:
         1px solid #e8e4dc;
@@ -789,9 +1051,11 @@ input {
 
 .length-section input {
 
-    width: 100%;
+    width:
+        100%;
 
-    padding: 18px;
+    padding:
+        18px;
 
     background:
         #ffffff;
@@ -802,7 +1066,8 @@ input {
     border-radius:
         18px;
 
-    outline: none;
+    outline:
+        none;
 
     color:
         var(--black);
@@ -863,7 +1128,8 @@ input {
 
 .options {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, 1fr);
@@ -1110,18 +1376,24 @@ input {
 @keyframes checkbox-pop {
 
     0% {
+
         transform:
             scale(0.78);
+
     }
 
     60% {
+
         transform:
             scale(1.14);
+
     }
 
     100% {
+
         transform:
             scale(1.08);
+
     }
 
 }
@@ -1183,7 +1455,7 @@ input {
 
 
 /* ==================================================
-   COPY BUTTON
+   COPY
 ================================================== */
 
 .copy-button {
@@ -1225,8 +1497,7 @@ input {
         transform,
         background-color,
         border-color,
-        box-shadow,
-        color;
+        box-shadow;
 
     transition-duration:
         220ms;
@@ -1417,7 +1688,7 @@ input {
 
 
 /* ==================================================
-   GENERATE BUTTON
+   GENERATE
 ================================================== */
 
 .primary-button {
@@ -1570,7 +1841,15 @@ footer {
     .hero {
 
         padding-top:
-            60px;
+            50px;
+
+    }
+
+
+    .hero-top {
+
+        align-items:
+            flex-start;
 
     }
 
@@ -1579,6 +1858,14 @@ footer {
 
         font-size:
             3.5rem;
+
+    }
+
+
+    .language-selector {
+
+        height:
+            36px;
 
     }
 
