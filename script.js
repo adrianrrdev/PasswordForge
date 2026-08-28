@@ -72,14 +72,17 @@ function caracterAleatorio(texto) {
     let arrayAleatorio =
         new Uint32Array(1);
 
+
     crypto.getRandomValues(
         arrayAleatorio
     );
+
 
     let posicion =
         arrayAleatorio[0]
         %
         texto.length;
+
 
     return texto[posicion];
 
@@ -126,9 +129,11 @@ function generarPassword() {
     ========================== */
 
     if (
+        Number.isNaN(
+            longitudPassword
+        ) ||
         longitudPassword < 4 ||
-        longitudPassword > 64 ||
-        Number.isNaN(longitudPassword)
+        longitudPassword > 64
     ) {
 
         passwordActual = "";
@@ -157,7 +162,7 @@ function generarPassword() {
 
 
     /* =========================
-       OPCIONES
+       LEER OPCIONES
     ========================== */
 
     let opciones = {
@@ -192,7 +197,9 @@ function generarPassword() {
     let disponibles = "";
 
 
-    if (opciones.mayusculas) {
+    if (
+        opciones.mayusculas
+    ) {
 
         disponibles +=
             caracteres.mayusculas;
@@ -200,7 +207,9 @@ function generarPassword() {
     }
 
 
-    if (opciones.minusculas) {
+    if (
+        opciones.minusculas
+    ) {
 
         disponibles +=
             caracteres.minusculas;
@@ -208,7 +217,9 @@ function generarPassword() {
     }
 
 
-    if (opciones.numeros) {
+    if (
+        opciones.numeros
+    ) {
 
         disponibles +=
             caracteres.numeros;
@@ -216,7 +227,9 @@ function generarPassword() {
     }
 
 
-    if (opciones.simbolos) {
+    if (
+        opciones.simbolos
+    ) {
 
         disponibles +=
             caracteres.simbolos;
@@ -258,7 +271,7 @@ function generarPassword() {
 
 
     /* =========================
-       CREAR PASSWORD
+       NUEVA PASSWORD
     ========================== */
 
     let nuevaPassword = "";
@@ -268,7 +281,9 @@ function generarPassword() {
        GARANTIZAR CATEGORÍAS
     ========================== */
 
-    if (opciones.mayusculas) {
+    if (
+        opciones.mayusculas
+    ) {
 
         nuevaPassword +=
             caracterAleatorio(
@@ -278,7 +293,9 @@ function generarPassword() {
     }
 
 
-    if (opciones.minusculas) {
+    if (
+        opciones.minusculas
+    ) {
 
         nuevaPassword +=
             caracterAleatorio(
@@ -288,7 +305,9 @@ function generarPassword() {
     }
 
 
-    if (opciones.numeros) {
+    if (
+        opciones.numeros
+    ) {
 
         nuevaPassword +=
             caracterAleatorio(
@@ -298,7 +317,9 @@ function generarPassword() {
     }
 
 
-    if (opciones.simbolos) {
+    if (
+        opciones.simbolos
+    ) {
 
         nuevaPassword +=
             caracterAleatorio(
@@ -343,16 +364,14 @@ function generarPassword() {
         nuevaPassword;
 
 
-    /*
-        Cada contraseña nueva
-        empieza oculta.
-    */
+    passwordVisible =
+        false;
 
-    passwordVisible = false;
 
     eyeButton.classList.remove(
         "is-visible"
     );
+
 
     eyeButton.setAttribute(
         "aria-pressed",
@@ -360,15 +379,12 @@ function generarPassword() {
     );
 
 
-    /* =========================
-       ACTUALIZAR INTERFAZ
-    ========================== */
-
     actualizarPassword();
 
     actualizarEstadoCopy();
 
     actualizarFortaleza();
+
 
     copyButton.classList.remove(
         "copied"
@@ -378,7 +394,7 @@ function generarPassword() {
 
 
 /* ==================================================
-   MEZCLAR PASSWORD
+   MEZCLAR
 ================================================== */
 
 function mezclarPassword(password) {
@@ -396,20 +412,25 @@ function mezclarPassword(password) {
         let arrayAleatorio =
             new Uint32Array(1);
 
+
         crypto.getRandomValues(
             arrayAleatorio
         );
+
 
         let posicion =
             arrayAleatorio[0]
             %
             (i + 1);
 
+
         let temporal =
             resultado[i];
 
+
         resultado[i] =
             resultado[posicion];
+
 
         resultado[posicion] =
             temporal;
@@ -423,7 +444,7 @@ function mezclarPassword(password) {
 
 
 /* ==================================================
-   MOSTRAR / OCULTAR
+   ACTUALIZAR PASSWORD
 ================================================== */
 
 function actualizarPassword() {
@@ -437,24 +458,51 @@ function actualizarPassword() {
     }
 
 
-    if (
-        passwordVisible
-    ) {
+    passwordDisplay.style.opacity =
+        "0";
 
-        passwordDisplay.textContent =
-            passwordActual;
 
-    } else {
+    passwordDisplay.style.transform =
+        "translateY(2px)";
 
-        passwordDisplay.textContent =
-            "•".repeat(
-                passwordActual.length
-            );
 
-    }
+    setTimeout(
+        function () {
+
+            if (
+                passwordVisible
+            ) {
+
+                passwordDisplay.textContent =
+                    passwordActual;
+
+            } else {
+
+                passwordDisplay.textContent =
+                    "•".repeat(
+                        passwordActual.length
+                    );
+
+            }
+
+
+            passwordDisplay.style.opacity =
+                "1";
+
+
+            passwordDisplay.style.transform =
+                "translateY(0)";
+
+        },
+        90
+    );
 
 }
 
+
+/* ==================================================
+   MOSTRAR / OCULTAR
+================================================== */
 
 function mostrarOcultarPassword() {
 
@@ -554,88 +602,91 @@ function calcularFortaleza(password) {
 
     let score = 0;
 
-    let longitudPassword =
-        password.length;
-
 
     /* LONGITUD */
 
     if (
-        longitudPassword >= 8
+        password.length >= 8
     ) {
 
-        score += 1;
+        score++;
 
     }
 
 
     if (
-        longitudPassword >= 12
+        password.length >= 12
     ) {
 
-        score += 1;
+        score++;
 
     }
 
 
     if (
-        longitudPassword >= 16
+        password.length >= 16
     ) {
 
-        score += 1;
+        score++;
 
     }
 
 
     /* TIPOS DE CARACTERES */
 
-    let tieneMayusculas =
-        /[A-Z]/.test(password);
-
-    let tieneMinusculas =
-        /[a-z]/.test(password);
-
-    let tieneNumeros =
-        /[0-9]/.test(password);
-
-    let tieneSimbolos =
-        /[^A-Za-z0-9]/.test(password);
-
-
-    let variedad = 0;
-
-
-    if (tieneMayusculas) {
-        variedad++;
-    }
-
-    if (tieneMinusculas) {
-        variedad++;
-    }
-
-    if (tieneNumeros) {
-        variedad++;
-    }
-
-    if (tieneSimbolos) {
-        variedad++;
-    }
+    let tipos = 0;
 
 
     if (
-        variedad >= 2
+        /[A-Z]/.test(password)
     ) {
 
-        score += 1;
+        tipos++;
 
     }
 
 
     if (
-        variedad === 4
+        /[a-z]/.test(password)
     ) {
 
-        score += 1;
+        tipos++;
+
+    }
+
+
+    if (
+        /[0-9]/.test(password)
+    ) {
+
+        tipos++;
+
+    }
+
+
+    if (
+        /[^A-Za-z0-9]/.test(password)
+    ) {
+
+        tipos++;
+
+    }
+
+
+    if (
+        tipos >= 2
+    ) {
+
+        score++;
+
+    }
+
+
+    if (
+        tipos === 4
+    ) {
+
+        score++;
 
     }
 
@@ -775,8 +826,15 @@ function activarSegmentos(cantidad) {
         i++
     ) {
 
-        segmentos[i].classList.add(
-            "active"
+        setTimeout(
+            function () {
+
+                segmentos[i].classList.add(
+                    "active"
+                );
+
+            },
+            i * 70
         );
 
     }

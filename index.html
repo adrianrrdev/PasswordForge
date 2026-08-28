@@ -34,9 +34,7 @@
     >
 
 
-    <!-- =========================
-         CSS
-    ========================== -->
+    <!-- CSS -->
 
     <link
         rel="stylesheet"
@@ -44,9 +42,7 @@
     >
 
 
-    <!-- =========================
-         FAVICON
-    ========================== -->
+    <!-- FAVICON -->
 
     <link
         rel="icon"
@@ -93,9 +89,7 @@
         <section class="password-card">
 
 
-            <!-- =========================
-                 PASSWORD
-            ========================== -->
+            <!-- PASSWORD -->
 
             <div class="password-section">
 
@@ -132,12 +126,20 @@
                             <div class="eye-face">
 
                                 <div class="eye-ball">
-                                    <div class="eye-pupil"></div>
+
+                                    <div
+                                        class="eye-pupil"
+                                    ></div>
+
                                 </div>
 
 
                                 <div class="eye-ball">
-                                    <div class="eye-pupil"></div>
+
+                                    <div
+                                        class="eye-pupil"
+                                    ></div>
+
                                 </div>
 
                             </div>
@@ -146,55 +148,53 @@
 
                     </div>
 
+                </div>
 
-                    <!-- =========================
-                         PASSWORD STRENGTH
-                    ========================== -->
+
+                <!-- PASSWORD STRENGTH -->
+
+                <div
+                    class="strength"
+                    id="strength"
+                >
+
+                    <div class="strength-header">
+
+                        <span>
+                            Password strength
+                        </span>
+
+                        <strong id="strengthText">
+                            Waiting
+                        </strong>
+
+                    </div>
+
 
                     <div
-                        class="strength"
-                        id="strength"
+                        class="strength-bar"
+                        aria-hidden="true"
                     >
 
-                        <div class="strength-header">
+                        <span
+                            class="strength-segment"
+                            id="strength1"
+                        ></span>
 
-                            <span>
-                                Password strength
-                            </span>
+                        <span
+                            class="strength-segment"
+                            id="strength2"
+                        ></span>
 
-                            <strong id="strengthText">
-                                Waiting
-                            </strong>
+                        <span
+                            class="strength-segment"
+                            id="strength3"
+                        ></span>
 
-                        </div>
-
-
-                        <div
-                            class="strength-bar"
-                            aria-hidden="true"
-                        >
-
-                            <span
-                                class="strength-segment"
-                                id="strength1"
-                            ></span>
-
-                            <span
-                                class="strength-segment"
-                                id="strength2"
-                            ></span>
-
-                            <span
-                                class="strength-segment"
-                                id="strength3"
-                            ></span>
-
-                            <span
-                                class="strength-segment"
-                                id="strength4"
-                            ></span>
-
-                        </div>
+                        <span
+                            class="strength-segment"
+                            id="strength4"
+                        ></span>
 
                     </div>
 
@@ -439,10 +439,6 @@
         </section>
 
 
-
-        <!-- =========================
-             FOOTER
-        ========================== -->
 
         <footer>
 

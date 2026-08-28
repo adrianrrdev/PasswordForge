@@ -20,14 +20,20 @@
     --card: #ffffff;
 
     --purple: #7c3aed;
+
     --purple-dark: #6d28d9;
+
     --purple-light: #f2efff;
+
     --purple-soft: #eee7ff;
 
     --black: #171717;
+
     --gray: #66615b;
 
     --border: #e6e3dc;
+
+    --soft-border: #ded9d1;
 
 }
 
@@ -188,7 +194,7 @@ input {
 .password-card:hover {
 
     box-shadow:
-        0 24px 70px rgba(
+        0 25px 70px rgba(
             0,
             0,
             0,
@@ -222,7 +228,7 @@ input {
 
 
 /* ==================================================
-   PASSWORD
+   PASSWORD SECTION
 ================================================== */
 
 .password-section {
@@ -231,6 +237,10 @@ input {
 
 }
 
+
+/* ==================================================
+   PASSWORD OUTPUT
+================================================== */
 
 .password-output {
 
@@ -251,6 +261,8 @@ input {
 }
 
 
+/* Password row */
+
 .password-row {
 
     display: flex;
@@ -263,6 +275,8 @@ input {
 
 }
 
+
+/* Password text */
 
 .password-output p {
 
@@ -282,11 +296,21 @@ input {
 
     letter-spacing: 0.08em;
 
+    transition-property:
+        opacity,
+        transform;
+
+    transition-duration:
+        180ms;
+
+    transition-timing-function:
+        ease;
+
 }
 
 
 /* ==================================================
-   EYE BUTTON
+   EYES
 ================================================== */
 
 .eye-button {
@@ -327,7 +351,7 @@ input {
         box-shadow;
 
     transition-duration:
-        300ms;
+        250ms;
 
     transition-timing-function:
         cubic-bezier(
@@ -346,7 +370,8 @@ input {
         var(--purple-dark);
 
     transform:
-        translateY(-2px);
+        translateY(-2px)
+        scale(1.02);
 
     box-shadow:
         0 12px 28px rgba(
@@ -366,10 +391,6 @@ input {
 
 }
 
-
-/* ==================================================
-   EYES
-================================================== */
 
 .eye-face {
 
@@ -541,24 +562,18 @@ input {
 @keyframes eye-look {
 
     0% {
-
         transform:
             scale(0.82);
-
     }
 
     55% {
-
         transform:
             scale(1.08);
-
     }
 
     100% {
-
         transform:
             scale(1);
-
     }
 
 }
@@ -570,7 +585,9 @@ input {
 
 .strength {
 
-    margin-top: 18px;
+    margin-top: 14px;
+
+    padding: 0 4px;
 
 }
 
@@ -602,6 +619,16 @@ input {
 
     font-weight: 700;
 
+    transition-property:
+        transform,
+        color;
+
+    transition-duration:
+        200ms;
+
+    transition-timing-function:
+        ease;
+
 }
 
 
@@ -625,15 +652,25 @@ input {
 
     border-radius: 999px;
 
+    transform: scaleY(1);
+
     transition-property:
         background-color,
-        transform;
+        transform,
+        opacity;
 
     transition-duration:
         250ms;
 
     transition-timing-function:
-        ease;
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+
+    opacity: 0.7;
 
 }
 
@@ -641,7 +678,43 @@ input {
 .strength-segment.active {
 
     transform:
-        scaleY(1.25);
+        scaleY(1.35);
+
+    opacity: 1;
+
+    animation-name:
+        strength-pop;
+
+    animation-duration:
+        280ms;
+
+    animation-timing-function:
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+
+}
+
+
+@keyframes strength-pop {
+
+    0% {
+        transform:
+            scaleY(1);
+    }
+
+    50% {
+        transform:
+            scaleY(1.6);
+    }
+
+    100% {
+        transform:
+            scaleY(1.35);
+    }
 
 }
 
@@ -724,13 +797,12 @@ input {
         #ffffff;
 
     border:
-        1px solid #ded9d1;
+        1px solid var(--soft-border);
 
     border-radius:
         18px;
 
-    outline:
-        none;
+    outline: none;
 
     color:
         var(--black);
@@ -746,13 +818,22 @@ input {
 
     transition-property:
         border-color,
-        box-shadow;
+        box-shadow,
+        transform;
 
     transition-duration:
         220ms;
 
     transition-timing-function:
         ease;
+
+}
+
+
+.length-section input:hover {
+
+    border-color:
+        #cfc8bf;
 
 }
 
@@ -769,6 +850,9 @@ input {
             237,
             0.10
         );
+
+    transform:
+        translateY(-1px);
 
 }
 
@@ -869,6 +953,14 @@ input {
 }
 
 
+.checkbox:active {
+
+    transform:
+        scale(0.99);
+
+}
+
+
 .checkbox input {
 
     position:
@@ -960,7 +1052,7 @@ input {
         opacity;
 
     transition-duration:
-        250ms;
+        220ms;
 
     transition-timing-function:
         cubic-bezier(
@@ -1018,28 +1110,26 @@ input {
 @keyframes checkbox-pop {
 
     0% {
-
         transform:
             scale(0.78);
-
     }
 
     60% {
-
         transform:
             scale(1.14);
-
     }
 
     100% {
-
         transform:
             scale(1.08);
-
     }
 
 }
 
+
+/* ==================================================
+   CHECKBOX TEXT
+================================================== */
 
 .checkbox-text {
 
@@ -1093,7 +1183,7 @@ input {
 
 
 /* ==================================================
-   COPY
+   COPY BUTTON
 ================================================== */
 
 .copy-button {
@@ -1245,7 +1335,7 @@ input {
         transform;
 
     transition-duration:
-        220ms;
+        180ms;
 
     transition-timing-function:
         ease;
@@ -1327,7 +1417,7 @@ input {
 
 
 /* ==================================================
-   GENERATE
+   GENERATE BUTTON
 ================================================== */
 
 .primary-button {
