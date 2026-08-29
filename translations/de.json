@@ -1,0 +1,34 @@
+{
+    "eyebrow": "PROJECT Z · TOOL #001",
+    "title": "Password Forge",
+    "subtitle": "Erstellen Sie starke und sichere Passwörter in Sekundenschnelle.",
+
+    "passwordLabel": "Passwort",
+    "strengthLabel": "Passwortstärke",
+    "lengthLabel": "Länge",
+    "characterSetLabel": "Zeichensatz",
+
+    "uppercase": "Großbuchstaben",
+    "lowercase": "Kleinbuchstaben",
+    "numbers": "Zahlen",
+    "symbols": "Symbole",
+
+    "generate": "Passwort generieren",
+
+    "footer": "Erstellt mit HTML & CSS · ProyectoZ",
+
+    "waiting": "Wartend",
+    "veryWeak": "Sehr schwach",
+    "weak": "Schwach",
+    "medium": "Mittel",
+    "strong": "Stark",
+    "veryStrong": "Sehr stark",
+
+    "generateFirst": "Generieren Sie zuerst ein Passwort",
+    "lengthError": "Die Länge muss zwischen 4 und 64 liegen",
+    "selectOption": "Wählen Sie mindestens eine Option",
+
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort ausblenden",
+    "copyPassword": "Passwort kopieren"
+}

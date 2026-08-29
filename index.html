@@ -10,6 +10,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="description"
+        content="Password Forge — secure password generator built with HTML, CSS and JavaScript."
+    >
+
     <title>Password Forge</title>
 
 
@@ -40,7 +45,7 @@
 
     <link
         rel="stylesheet"
-        href="style.css"
+        href="styles.css"
     >
 
 
@@ -68,7 +73,6 @@
 
         <section class="hero">
 
-
             <div class="hero-top">
 
                 <p
@@ -79,21 +83,26 @@
                 </p>
 
 
-                <!-- LANGUAGE SELECTOR -->
+                <!-- LANGUAGE -->
 
                 <label
                     class="language-selector"
                     for="language"
+                    data-i18n-aria-label="languageSelector"
                 >
 
-                    <span class="language-icon">
+                    <span
+                        class="language-icon"
+                        aria-hidden="true"
+                    >
                         ◎
                     </span>
 
+
                     <select
                         id="language"
-                        onchange="cambiarIdioma()"
                         aria-label="Language"
+                        onchange="cambiarIdioma()"
                     >
 
                         <option value="en">
@@ -102,6 +111,18 @@
 
                         <option value="es">
                             ES
+                        </option>
+
+                        <option value="fr">
+                            FR
+                        </option>
+
+                        <option value="de">
+                            DE
+                        </option>
+
+                        <option value="it">
+                            IT
                         </option>
 
                     </select>
@@ -152,7 +173,6 @@
 
                     <div class="password-row">
 
-
                         <p
                             id="passwordDisplay"
                             aria-live="polite"
@@ -161,7 +181,7 @@
                         </p>
 
 
-                        <!-- EYES -->
+                        <!-- EYE BUTTON -->
 
                         <button
                             type="button"
@@ -278,6 +298,7 @@
                         min="4"
                         max="64"
                         value="16"
+                        inputmode="numeric"
                         aria-label="Password length"
                     >
 
@@ -507,7 +528,7 @@
 
         <footer data-i18n="footer">
 
-            Built with HTML & CSS & JAVASCRIPT · ProyectoZ
+            Built with HTML & CSS · ProyectoZ
 
         </footer>
 

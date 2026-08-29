@@ -14,6 +14,9 @@ let eyeButton =
 let copyButton =
     document.getElementById("copyButton");
 
+let language =
+    document.getElementById("language");
+
 let strength =
     document.getElementById("strength");
 
@@ -31,9 +34,6 @@ let strength3 =
 
 let strength4 =
     document.getElementById("strength4");
-
-let language =
-    document.getElementById("language");
 
 
 /* ==================================================
@@ -67,173 +67,7 @@ let passwordVisible = false;
 
 let idiomaActual = "en";
 
-
-/* ==================================================
-   TRADUCCIONES
-================================================== */
-
-let traducciones = {
-
-    en: {
-
-        eyebrow:
-            "PROJECT Z · TOOL #001",
-
-        title:
-            "Password Forge",
-
-        subtitle:
-            "Create strong and secure passwords in seconds.",
-
-        passwordLabel:
-            "Password",
-
-        strengthLabel:
-            "Password strength",
-
-        lengthLabel:
-            "Length",
-
-        characterSetLabel:
-            "Character Set",
-
-        uppercase:
-            "Uppercase",
-
-        lowercase:
-            "Lowercase",
-
-        numbers:
-            "Numbers",
-
-        symbols:
-            "Symbols",
-
-        generate:
-            "Generate password",
-
-        footer:
-            "Built with HTML & CSS · ProyectoZ",
-
-        waiting:
-            "Waiting",
-
-        veryWeak:
-            "Very weak",
-
-        weak:
-            "Weak",
-
-        medium:
-            "Medium",
-
-        strong:
-            "Strong",
-
-        veryStrong:
-            "Very strong",
-
-        generateFirst:
-            "Generate a password first",
-
-        lengthError:
-            "Length must be 4–64",
-
-        selectOption:
-            "Select at least one option",
-
-        showPassword:
-            "Show password",
-
-        hidePassword:
-            "Hide password",
-
-        copyPassword:
-            "Copy password"
-
-    },
-
-
-    es: {
-
-        eyebrow:
-            "PROJECT Z · HERRAMIENTA #001",
-
-        title:
-            "Password Forge",
-
-        subtitle:
-            "Crea contraseñas seguras y resistentes en segundos.",
-
-        passwordLabel:
-            "Contraseña",
-
-        strengthLabel:
-            "Seguridad de la contraseña",
-
-        lengthLabel:
-            "Longitud",
-
-        characterSetLabel:
-            "Conjunto de caracteres",
-
-        uppercase:
-            "Mayúsculas",
-
-        lowercase:
-            "Minúsculas",
-
-        numbers:
-            "Números",
-
-        symbols:
-            "Símbolos",
-
-        generate:
-            "Generar contraseña",
-
-        footer:
-            "Hecho con HTML y CSS · ProyectoZ",
-
-        waiting:
-            "Esperando",
-
-        veryWeak:
-            "Muy débil",
-
-        weak:
-            "Débil",
-
-        medium:
-            "Media",
-
-        strong:
-            "Fuerte",
-
-        veryStrong:
-            "Muy fuerte",
-
-        generateFirst:
-            "Genera una contraseña primero",
-
-        lengthError:
-            "La longitud debe ser de 4 a 64",
-
-        selectOption:
-            "Selecciona al menos una opción",
-
-        showPassword:
-            "Mostrar contraseña",
-
-        hidePassword:
-            "Ocultar contraseña",
-
-        copyPassword:
-            "Copiar contraseña"
-
-    }
-
-};
+let traducciones = {};
 
 
 /* ==================================================
@@ -248,15 +82,26 @@ function detectarIdioma() {
         );
 
 
+    /*
+        Si el usuario ya eligió un idioma,
+        respetamos su elección.
+    */
+
     if (
-        idiomaGuardado === "es" ||
-        idiomaGuardado === "en"
+        esIdiomaSoportado(
+            idiomaGuardado
+        )
     ) {
 
         return idiomaGuardado;
 
     }
 
+
+    /*
+        navigator.languages contiene las
+        preferencias del navegador ordenadas.
+    */
 
     let idiomasNavegador =
         navigator.languages || [
@@ -277,8 +122,9 @@ function detectarIdioma() {
 
 
         if (
-            idioma === "es" ||
-            idioma === "en"
+            esIdiomaSoportado(
+                idioma
+            )
         ) {
 
             return idioma;
@@ -288,43 +134,110 @@ function detectarIdioma() {
     }
 
 
+    /*
+        Inglés como idioma de respaldo.
+    */
+
     return "en";
 
 }
 
 
 /* ==================================================
-   CAMBIAR IDIOMA
+   COMPROBAR IDIOMA
 ================================================== */
 
-function cambiarIdioma() {
+function esIdiomaSoportado(idioma) {
 
-    idiomaActual =
-        language.value;
-
-
-    localStorage.setItem(
-        "passwordForgeLanguage",
-        idiomaActual
+    return (
+        idioma === "en" ||
+        idioma === "es" ||
+        idioma === "fr" ||
+        idioma === "de" ||
+        idioma === "it"
     );
-
-
-    aplicarIdioma();
 
 }
 
 
 /* ==================================================
-   APLICAR IDIOMA
+   CARGAR IDIOMA
 ================================================== */
 
-function aplicarIdioma() {
+async function cargarIdioma(idioma) {
 
-    let textos =
-        traducciones[
-            idiomaActual
-        ];
+    try {
 
+        let respuesta =
+            await fetch(
+                "translations/"
+                + idioma
+                + ".json"
+            );
+
+
+        if (
+            !respuesta.ok
+        ) {
+
+            throw new Error(
+                "Translation file not found"
+            );
+
+        }
+
+
+        traducciones =
+            await respuesta.json();
+
+
+        idiomaActual =
+            idioma;
+
+
+        language.value =
+            idioma;
+
+
+        document.documentElement.lang =
+            idioma;
+
+
+        aplicarTraducciones();
+
+
+    } catch (error) {
+
+        /*
+            Si falla el idioma solicitado,
+            usamos inglés como respaldo.
+        */
+
+        if (
+            idioma !== "en"
+        ) {
+
+            await cargarIdioma("en");
+
+        } else {
+
+            console.error(
+                "Could not load translations:",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ==================================================
+   APLICAR TRADUCCIONES
+================================================== */
+
+function aplicarTraducciones() {
 
     let elementos =
         document.querySelectorAll(
@@ -339,60 +252,61 @@ function aplicarIdioma() {
     ) {
 
         let clave =
-            elementos[i].getAttribute(
+            elementos[i]
+            .getAttribute(
                 "data-i18n"
             );
 
 
         if (
-            textos[clave]
+            traducciones[clave]
         ) {
 
             elementos[i].textContent =
-                textos[clave];
+                traducciones[clave];
 
         }
 
     }
 
 
-    document.documentElement.lang =
-        idiomaActual;
-
-
-    actualizarTextosDinamicos();
-
-
     actualizarAtributos();
+
+    actualizarTextoFortaleza();
 
 }
 
 
 /* ==================================================
-   TEXTOS DINÁMICOS
+   CAMBIAR IDIOMA
 ================================================== */
 
-function actualizarTextosDinamicos() {
+async function cambiarIdioma() {
 
-    let textos =
-        traducciones[
-            idiomaActual
-        ];
+    let nuevoIdioma =
+        language.value;
 
 
     if (
-        passwordActual === ""
+        !esIdiomaSoportado(
+            nuevoIdioma
+        )
     ) {
-
-        strengthText.textContent =
-            textos.waiting;
 
         return;
 
     }
 
 
-    actualizarFortaleza();
+    localStorage.setItem(
+        "passwordForgeLanguage",
+        nuevoIdioma
+    );
+
+
+    await cargarIdioma(
+        nuevoIdioma
+    );
 
 }
 
@@ -403,10 +317,13 @@ function actualizarTextosDinamicos() {
 
 function actualizarAtributos() {
 
-    let textos =
-        traducciones[
-            idiomaActual
-        ];
+    if (
+        !traducciones.showPassword
+    ) {
+
+        return;
+
+    }
 
 
     if (
@@ -415,24 +332,24 @@ function actualizarAtributos() {
 
         eyeButton.setAttribute(
             "aria-label",
-            textos.hidePassword
+            traducciones.hidePassword
         );
 
         eyeButton.setAttribute(
             "title",
-            textos.hidePassword
+            traducciones.hidePassword
         );
 
     } else {
 
         eyeButton.setAttribute(
             "aria-label",
-            textos.showPassword
+            traducciones.showPassword
         );
 
         eyeButton.setAttribute(
             "title",
-            textos.showPassword
+            traducciones.showPassword
         );
 
     }
@@ -440,18 +357,18 @@ function actualizarAtributos() {
 
     copyButton.setAttribute(
         "aria-label",
-        textos.copyPassword
+        traducciones.copyPassword
     );
 
     copyButton.setAttribute(
         "title",
-        textos.copyPassword
+        traducciones.copyPassword
     );
 
 
     longitud.setAttribute(
         "aria-label",
-        textos.lengthLabel
+        traducciones.lengthLabel
     );
 
 }
@@ -515,10 +432,12 @@ function actualizarEstadoCopy() {
 function generarPassword() {
 
     let longitudPassword =
-        Number(longitud.value);
+        Number(
+            longitud.value
+        );
 
 
-    /* VALIDACIÓN */
+    /* VALIDAR LONGITUD */
 
     if (
         Number.isNaN(
@@ -534,9 +453,7 @@ function generarPassword() {
 
 
         passwordDisplay.textContent =
-            traducciones[
-                idiomaActual
-            ].lengthError;
+            traducciones.lengthError;
 
 
         eyeButton.classList.remove(
@@ -645,9 +562,7 @@ function generarPassword() {
 
 
         passwordDisplay.textContent =
-            traducciones[
-                idiomaActual
-            ].selectOption;
+            traducciones.selectOption;
 
 
         eyeButton.classList.remove(
@@ -672,12 +587,15 @@ function generarPassword() {
     }
 
 
-    /* PASSWORD */
+    /* CREAR PASSWORD */
 
     let nuevaPassword = "";
 
 
-    /* GARANTIZAR CATEGORÍAS */
+    /*
+        Garantizamos al menos un
+        carácter de cada categoría.
+    */
 
     if (
         opciones.mayusculas
@@ -730,8 +648,7 @@ function generarPassword() {
     /* COMPLETAR */
 
     while (
-        nuevaPassword.length
-        <
+        nuevaPassword.length <
         longitudPassword
     ) {
 
@@ -758,8 +675,8 @@ function generarPassword() {
 
 
     /*
-        Cada nueva contraseña
-        comienza oculta.
+        Toda contraseña nueva empieza
+        oculta.
     */
 
     passwordVisible =
@@ -911,9 +828,7 @@ function mostrarOcultarPassword() {
     ) {
 
         passwordDisplay.textContent =
-            traducciones[
-                idiomaActual
-            ].generateFirst;
+            traducciones.generateFirst;
 
         return;
 
@@ -943,7 +858,7 @@ function mostrarOcultarPassword() {
 
 
 /* ==================================================
-   COPIAR PASSWORD
+   COPIAR
 ================================================== */
 
 function copiarPassword() {
@@ -953,9 +868,7 @@ function copiarPassword() {
     ) {
 
         passwordDisplay.textContent =
-            traducciones[
-                idiomaActual
-            ].generateFirst;
+            traducciones.generateFirst;
 
         return;
 
@@ -1008,6 +921,8 @@ function calcularFortaleza(password) {
 
     let score = 0;
 
+    let tipos = 0;
+
 
     /* LONGITUD */
 
@@ -1038,10 +953,7 @@ function calcularFortaleza(password) {
     }
 
 
-    /* TIPOS */
-
-    let tipos = 0;
-
+    /* TIPOS DE CARACTERES */
 
     if (
         /[A-Z]/.test(password)
@@ -1097,16 +1009,10 @@ function calcularFortaleza(password) {
     }
 
 
-    if (
-        score > 4
-    ) {
-
-        score = 4;
-
-    }
-
-
-    return score;
+    return Math.min(
+        score,
+        4
+    );
 
 }
 
@@ -1126,18 +1032,12 @@ function actualizarFortaleza() {
     resetStrength();
 
 
-    let textos =
-        traducciones[
-            idiomaActual
-        ];
-
-
     if (
         score === 0
     ) {
 
         strengthText.textContent =
-            textos.veryWeak;
+            traducciones.veryWeak;
 
         strength.classList.add(
             "weak"
@@ -1155,7 +1055,7 @@ function actualizarFortaleza() {
     ) {
 
         strengthText.textContent =
-            textos.weak;
+            traducciones.weak;
 
         strength.classList.add(
             "weak"
@@ -1173,7 +1073,7 @@ function actualizarFortaleza() {
     ) {
 
         strengthText.textContent =
-            textos.medium;
+            traducciones.medium;
 
         strength.classList.add(
             "medium"
@@ -1191,7 +1091,7 @@ function actualizarFortaleza() {
     ) {
 
         strengthText.textContent =
-            textos.strong;
+            traducciones.strong;
 
         strength.classList.add(
             "strong"
@@ -1205,7 +1105,7 @@ function actualizarFortaleza() {
 
 
     strengthText.textContent =
-        textos.veryStrong;
+        traducciones.veryStrong;
 
 
     strength.classList.add(
@@ -1214,6 +1114,28 @@ function actualizarFortaleza() {
 
 
     activarSegmentos(4);
+
+}
+
+
+/* ==================================================
+   ACTUALIZAR TEXTO DE FORTALEZA
+================================================== */
+
+function actualizarTextoFortaleza() {
+
+    if (
+        passwordActual !== ""
+    ) {
+
+        actualizarFortaleza();
+
+    } else {
+
+        strengthText.textContent =
+            traducciones.waiting;
+
+    }
 
 }
 
@@ -1257,7 +1179,7 @@ function activarSegmentos(cantidad) {
 
 
 /* ==================================================
-   RESET STRENGTH
+   RESET FORTALEZA
 ================================================== */
 
 function resetStrength() {
@@ -1293,27 +1215,40 @@ function resetStrength() {
     );
 
 
-    strengthText.textContent =
-        traducciones[
-            idiomaActual
-        ].waiting;
+    if (
+        traducciones.waiting
+    ) {
+
+        strengthText.textContent =
+            traducciones.waiting;
+
+    }
 
 }
 
 
 /* ==================================================
-   INICIAR IDIOMA
+   INICIALIZAR
 ================================================== */
 
-idiomaActual =
-    detectarIdioma();
+async function iniciarPasswordForge() {
+
+    idiomaActual =
+        detectarIdioma();
 
 
-language.value =
-    idiomaActual;
+    await cargarIdioma(
+        idiomaActual
+    );
 
 
-aplicarIdioma();
+    actualizarEstadoCopy();
+
+}
 
 
-actualizarEstadoCopy();
+/* ==================================================
+   START
+================================================== */
+
+iniciarPasswordForge();
