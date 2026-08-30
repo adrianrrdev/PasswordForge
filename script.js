@@ -1,5 +1,5 @@
 /* ==================================================
-   ELEMENTOS
+   ELEMENTS
 ================================================== */
 
 let longitud =
@@ -20,20 +20,8 @@ let language =
 let themeButton =
     document.getElementById("themeButton");
 
-let themeIcon =
-    document.getElementById("themeIcon");
-
 let themeColor =
     document.getElementById("themeColor");
-
-let generateButton =
-    document.getElementById("generateButton");
-
-let appStatus =
-    document.getElementById("appStatus");
-
-let securityMessage =
-    document.getElementById("securityMessage");
 
 let strength =
     document.getElementById("strength");
@@ -53,11 +41,17 @@ let strength3 =
 let strength4 =
     document.getElementById("strength4");
 
+let securityMessage =
+    document.getElementById("securityMessage");
+
 let historyList =
     document.getElementById("historyList");
 
 let historyEmpty =
     document.getElementById("historyEmpty");
+
+let appStatus =
+    document.getElementById("appStatus");
 
 
 /* ==================================================
@@ -78,20 +72,7 @@ let caracteres = {
     simbolos:
         "!@#$%^&*()_+-=[]{}"
 
-
 };
-
-
-/*
-    Characters that can be confused visually.
-
-    Example:
-    0 O
-    1 l I
-*/
-
-let caracteresAmbiguos =
-    "0O1lI";
 
 
 /* ==================================================
@@ -119,23 +100,17 @@ let passwordVisible = false;
 
 let idiomaActual = "en";
 
+let temaActual = "light";
+
 let traducciones = {};
 
 let historial = [];
-
-let temaActual = "light";
-
-
-/*
-    Prevents older password animations from
-    overwriting a newer generated password.
-*/
 
 let passwordRenderId = 0;
 
 
 /* ==================================================
-   LANGUAGE DETECTION
+   LANGUAGE
 ================================================== */
 
 function detectarIdioma() {
@@ -183,7 +158,7 @@ function detectarIdioma() {
         i++
     ) {
 
-        let valor =
+        let idioma =
             String(
                 idiomasNavegador[i]
             )
@@ -191,11 +166,8 @@ function detectarIdioma() {
             .replace(
                 "_",
                 "-"
-            );
-
-
-        let idioma =
-            valor.split("-")[0];
+            )
+            .split("-")[0];
 
 
         if (
@@ -217,10 +189,12 @@ function detectarIdioma() {
 
 
 /* ==================================================
-   LOAD TRANSLATION
+   LOAD LANGUAGE JSON
 ================================================== */
 
-async function cargarIdioma(idioma) {
+async function cargarIdioma(
+    idioma
+) {
 
     try {
 
@@ -228,10 +202,7 @@ async function cargarIdioma(idioma) {
             await fetch(
                 "./translations/"
                 + idioma
-                + ".json",
-                {
-                    cache: "no-store"
-                }
+                + ".json"
             );
 
 
@@ -240,18 +211,14 @@ async function cargarIdioma(idioma) {
         ) {
 
             throw new Error(
-                "Translation file not found"
+                "Translation file not found."
             );
 
         }
 
 
-        let datos =
-            await respuesta.json();
-
-
         traducciones =
-            datos;
+            await respuesta.json();
 
 
         idiomaActual =
@@ -272,7 +239,7 @@ async function cargarIdioma(idioma) {
     } catch (error) {
 
         console.error(
-            "Translation error:",
+            "Language loading error:",
             error
         );
 
@@ -318,23 +285,17 @@ function aplicarTraducciones() {
     ) {
 
         let clave =
-            elementos[i]
-            .getAttribute(
+            elementos[i].getAttribute(
                 "data-i18n"
             );
 
 
         if (
-            Object.prototype.hasOwnProperty.call(
-                traducciones,
-                clave
-            )
+            traducciones[clave]
         ) {
 
             elementos[i].textContent =
-                traducciones[
-                    clave
-                ];
+                traducciones[clave];
 
         }
 
@@ -346,17 +307,6 @@ function aplicarTraducciones() {
     actualizarTextoFortaleza();
 
     actualizarHistorial();
-
-
-    if (
-        passwordActual === ""
-    ) {
-
-        securityMessage.textContent =
-            traducciones.securityEmpty ||
-            "";
-
-    }
 
 }
 
@@ -408,8 +358,8 @@ function detectarTema() {
 
 
     if (
-        temaGuardado === "dark" ||
-        temaGuardado === "light"
+        temaGuardado === "light" ||
+        temaGuardado === "dark"
     ) {
 
         return temaGuardado;
@@ -447,9 +397,6 @@ function aplicarTema() {
         temaActual === "dark"
     ) {
 
-        themeIcon.textContent =
-            "☀";
-
         themeButton.setAttribute(
             "aria-label",
             traducciones.lightTheme ||
@@ -465,13 +412,10 @@ function aplicarTema() {
 
         themeColor.setAttribute(
             "content",
-            "#121212"
+            "#111111"
         );
 
     } else {
-
-        themeIcon.textContent =
-            "☾";
 
         themeButton.setAttribute(
             "aria-label",
@@ -596,7 +540,9 @@ function actualizarAtributos() {
    RANDOM CHARACTER
 ================================================== */
 
-function caracterAleatorio(texto) {
+function caracterAleatorio(
+    texto
+) {
 
     if (
         texto.length === 0
@@ -607,10 +553,9 @@ function caracterAleatorio(texto) {
     }
 
 
-    /*
-        Rejection sampling reduces modulo bias
-        when selecting a random character.
-    */
+    let arrayAleatorio =
+        new Uint32Array(1);
+
 
     let limite =
         Math.floor(
@@ -618,10 +563,6 @@ function caracterAleatorio(texto) {
             texto.length
         ) *
         texto.length;
-
-
-    let arrayAleatorio =
-        new Uint32Array(1);
 
 
     let numero;
@@ -651,7 +592,7 @@ function caracterAleatorio(texto) {
 
 
 /* ==================================================
-   PASSWORD OPTIONS
+   OPTIONS
 ================================================== */
 
 function obtenerOpciones() {
@@ -676,11 +617,6 @@ function obtenerOpciones() {
         simbolos:
             document.getElementById(
                 "simbolos"
-            ).checked,
-
-        ambiguos:
-            document.getElementById(
-                "ambiguos"
             ).checked
 
     };
@@ -739,64 +675,13 @@ function construirCaracteresDisponibles(
     }
 
 
-    if (
-        !opciones.ambiguos
-    ) {
-
-        for (
-            let i = 0;
-            i < caracteresAmbiguos.length;
-            i++
-        ) {
-
-            disponibles =
-                disponibles.replaceAll(
-                    caracteresAmbiguos[i],
-                    ""
-                );
-
-        }
-
-    }
-
-
     return disponibles;
 
 }
 
 
 /* ==================================================
-   REMOVE AMBIGUOUS CHARACTER
-================================================== */
-
-function eliminarAmbiguos(texto) {
-
-    let resultado =
-        texto;
-
-
-    for (
-        let i = 0;
-        i < caracteresAmbiguos.length;
-        i++
-    ) {
-
-        resultado =
-            resultado.replaceAll(
-                caracteresAmbiguos[i],
-                ""
-            );
-
-    }
-
-
-    return resultado;
-
-}
-
-
-/* ==================================================
-   GENERATE
+   GENERATE PASSWORD
 ================================================== */
 
 function generarPassword() {
@@ -808,7 +693,7 @@ function generarPassword() {
 
 
     /* =========================
-       VALIDATION
+       VALIDATE LENGTH
     ========================== */
 
     if (
@@ -821,8 +706,10 @@ function generarPassword() {
 
         resetPasswordState();
 
+
         passwordDisplay.textContent =
             traducciones.lengthError;
+
 
         resetStrength();
 
@@ -834,6 +721,10 @@ function generarPassword() {
 
     }
 
+
+    /* =========================
+       OPTIONS
+    ========================== */
 
     let opciones =
         obtenerOpciones();
@@ -845,14 +736,20 @@ function generarPassword() {
         );
 
 
+    /* =========================
+       NO OPTIONS
+    ========================== */
+
     if (
         disponibles.length === 0
     ) {
 
         resetPasswordState();
 
+
         passwordDisplay.textContent =
             traducciones.selectOption;
+
 
         resetStrength();
 
@@ -865,29 +762,21 @@ function generarPassword() {
     }
 
 
-    /*
-        Ensure there is at least one
-        character from every selected category.
-    */
+    /* =========================
+       REQUIRED CHARACTERS
+    ========================== */
 
-    let caracteresObligatorios = "";
+    let obligatorios =
+        "";
 
 
     if (
         opciones.mayusculas
     ) {
 
-        let fuente =
-            opciones.ambiguos
-                ? caracteres.mayusculas
-                : eliminarAmbiguos(
-                    caracteres.mayusculas
-                );
-
-
-        caracteresObligatorios +=
+        obligatorios +=
             caracterAleatorio(
-                fuente
+                caracteres.mayusculas
             );
 
     }
@@ -897,17 +786,9 @@ function generarPassword() {
         opciones.minusculas
     ) {
 
-        let fuente =
-            opciones.ambiguos
-                ? caracteres.minusculas
-                : eliminarAmbiguos(
-                    caracteres.minusculas
-                );
-
-
-        caracteresObligatorios +=
+        obligatorios +=
             caracterAleatorio(
-                fuente
+                caracteres.minusculas
             );
 
     }
@@ -917,17 +798,9 @@ function generarPassword() {
         opciones.numeros
     ) {
 
-        let fuente =
-            opciones.ambiguos
-                ? caracteres.numeros
-                : eliminarAmbiguos(
-                    caracteres.numeros
-                );
-
-
-        caracteresObligatorios +=
+        obligatorios +=
             caracterAleatorio(
-                fuente
+                caracteres.numeros
             );
 
     }
@@ -937,49 +810,20 @@ function generarPassword() {
         opciones.simbolos
     ) {
 
-        let fuente =
-            opciones.ambiguos
-                ? caracteres.simbolos
-                : eliminarAmbiguos(
-                    caracteres.simbolos
-                );
-
-
-        caracteresObligatorios +=
+        obligatorios +=
             caracterAleatorio(
-                fuente
+                caracteres.simbolos
             );
 
     }
 
 
-    /*
-        If the selected categories exceed
-        the requested length, stop instead
-        of producing an invalid password.
-    */
-
-    if (
-        caracteresObligatorios.length >
-        longitudPassword
-    ) {
-
-        resetPasswordState();
-
-        passwordDisplay.textContent =
-            traducciones.lengthError;
-
-        resetStrength();
-
-        actualizarEstadoCopy();
-
-        return;
-
-    }
-
+    /* =========================
+       CREATE
+    ========================== */
 
     let nuevaPassword =
-        caracteresObligatorios;
+        obligatorios;
 
 
     while (
@@ -995,11 +839,19 @@ function generarPassword() {
     }
 
 
+    /* =========================
+       SHUFFLE
+    ========================== */
+
     nuevaPassword =
         mezclarPassword(
             nuevaPassword
         );
 
+
+    /* =========================
+       SAVE
+    ========================== */
 
     passwordActual =
         nuevaPassword;
@@ -1007,11 +859,6 @@ function generarPassword() {
 
     passwordVisible =
         false;
-
-
-    guardarEnHistorial(
-        passwordActual
-    );
 
 
     eyeButton.classList.remove(
@@ -1030,6 +877,11 @@ function generarPassword() {
     );
 
 
+    guardarEnHistorial(
+        passwordActual
+    );
+
+
     actualizarPassword();
 
     actualizarEstadoCopy();
@@ -1038,8 +890,6 @@ function generarPassword() {
 
     actualizarAtributos();
 
-    guardarPreferencias();
-
 }
 
 
@@ -1047,7 +897,9 @@ function generarPassword() {
    SHUFFLE
 ================================================== */
 
-function mezclarPassword(password) {
+function mezclarPassword(
+    password
+) {
 
     let resultado =
         password.split("");
@@ -1115,6 +967,7 @@ function actualizarPassword() {
     passwordDisplay.style.opacity =
         "0";
 
+
     passwordDisplay.style.transform =
         "translateY(2px)";
 
@@ -1152,6 +1005,7 @@ function actualizarPassword() {
             passwordDisplay.style.opacity =
                 "1";
 
+
             passwordDisplay.style.transform =
                 "translateY(0)";
 
@@ -1172,12 +1026,18 @@ function mostrarOcultarPassword() {
         passwordActual === ""
     ) {
 
-        passwordDisplay.textContent =
+        let mensaje =
             traducciones.generateFirst;
 
+
+        passwordDisplay.textContent =
+            mensaje;
+
+
         mostrarEstado(
-            traducciones.generateFirst
+            mensaje
         );
+
 
         return;
 
@@ -1248,7 +1108,8 @@ async function copiarPassword() {
 
 
         mostrarEstado(
-            traducciones.copied ||
+            traducciones.copied
+            ||
             "Password copied"
         );
 
@@ -1274,7 +1135,8 @@ async function copiarPassword() {
 
 
         mostrarEstado(
-            traducciones.copyError ||
+            traducciones.copyError
+            ||
             "Could not copy password"
         );
 
@@ -1297,28 +1159,30 @@ function calcularFortaleza(
 
         return {
 
-            score: 0,
+            score:
+                0,
 
-            label:
-                "waiting",
-
-            tips: []
+            tips:
+                []
 
         };
 
     }
 
 
-    let score = 0;
-
-    let tipos = 0;
-
-    let tips = [];
+    let score =
+        0;
 
 
-    /* =========================
-       LENGTH
-    ========================== */
+    let tipos =
+        0;
+
+
+    let tips =
+        [];
+
+
+    /* LENGTH */
 
     if (
         password.length >= 8
@@ -1329,8 +1193,7 @@ function calcularFortaleza(
     } else {
 
         tips.push(
-            traducciones.tipLength ||
-            "Use at least 8 characters."
+            traducciones.tipLength
         );
 
     }
@@ -1342,13 +1205,10 @@ function calcularFortaleza(
 
         score++;
 
-    } else if (
-        password.length >= 8
-    ) {
+    } else {
 
         tips.push(
-            traducciones.tipLonger ||
-            "Consider using 12 or more characters."
+            traducciones.tipLonger
         );
 
     }
@@ -1363,9 +1223,7 @@ function calcularFortaleza(
     }
 
 
-    /* =========================
-       CHARACTER TYPES
-    ========================== */
+    /* UPPERCASE */
 
     if (
         /[A-Z]/.test(
@@ -1378,12 +1236,13 @@ function calcularFortaleza(
     } else {
 
         tips.push(
-            traducciones.tipUppercase ||
-            "Add uppercase letters."
+            traducciones.tipUppercase
         );
 
     }
 
+
+    /* LOWERCASE */
 
     if (
         /[a-z]/.test(
@@ -1396,12 +1255,13 @@ function calcularFortaleza(
     } else {
 
         tips.push(
-            traducciones.tipLowercase ||
-            "Add lowercase letters."
+            traducciones.tipLowercase
         );
 
     }
 
+
+    /* NUMBERS */
 
     if (
         /[0-9]/.test(
@@ -1414,12 +1274,13 @@ function calcularFortaleza(
     } else {
 
         tips.push(
-            traducciones.tipNumbers ||
-            "Add numbers."
+            traducciones.tipNumbers
         );
 
     }
 
+
+    /* SYMBOLS */
 
     if (
         /[^A-Za-z0-9]/.test(
@@ -1432,8 +1293,7 @@ function calcularFortaleza(
     } else {
 
         tips.push(
-            traducciones.tipSymbols ||
-            "Add symbols."
+            traducciones.tipSymbols
         );
 
     }
@@ -1457,9 +1317,7 @@ function calcularFortaleza(
     }
 
 
-    /* =========================
-       REPETITION
-    ========================== */
+    /* REPEATED CHARACTERS */
 
     if (
         /(.)\1{2,}/.test(
@@ -1470,16 +1328,13 @@ function calcularFortaleza(
         score--;
 
         tips.push(
-            traducciones.tipRepetition ||
-            "Avoid repeated characters."
+            traducciones.tipRepetition
         );
 
     }
 
 
-    /* =========================
-       SEQUENCES
-    ========================== */
+    /* COMMON SEQUENCES */
 
     let secuencias = [
 
@@ -1490,12 +1345,13 @@ function calcularFortaleza(
         "4567",
         "5678",
         "6789",
+
         "abcd",
         "bcde",
         "cdef",
         "defg",
         "efgh",
-        "fghi",
+
         "qwer",
         "asdf",
         "zxcv"
@@ -1503,7 +1359,7 @@ function calcularFortaleza(
     ];
 
 
-    let passwordMinuscula =
+    let minuscula =
         password.toLowerCase();
 
 
@@ -1514,7 +1370,7 @@ function calcularFortaleza(
     ) {
 
         if (
-            passwordMinuscula.includes(
+            minuscula.includes(
                 secuencias[i]
             )
         ) {
@@ -1522,8 +1378,7 @@ function calcularFortaleza(
             score--;
 
             tips.push(
-                traducciones.tipSequence ||
-                "Avoid obvious sequences."
+                traducciones.tipSequence
             );
 
             break;
@@ -1532,10 +1387,6 @@ function calcularFortaleza(
 
     }
 
-
-    /*
-        Clamp to 0–4.
-    */
 
     score =
         Math.max(
@@ -1553,7 +1404,17 @@ function calcularFortaleza(
             score,
 
         tips:
-            tips.slice(
+            tips
+            .filter(
+                function (tip) {
+
+                    return Boolean(
+                        tip
+                    );
+
+                }
+            )
+            .slice(
                 0,
                 2
             )
@@ -1649,8 +1510,7 @@ function actualizarFortaleza() {
     ) {
 
         securityMessage.textContent =
-            traducciones.securityGood ||
-            "Good character variety and length.";
+            traducciones.securityGood;
 
     } else {
 
@@ -1665,24 +1525,25 @@ function actualizarFortaleza() {
 
 
 /* ==================================================
-   STRENGTH TEXT UPDATE
+   STRENGTH TEXT
 ================================================== */
 
 function actualizarTextoFortaleza() {
 
     if (
-        passwordActual !== ""
+        passwordActual === ""
     ) {
-
-        actualizarFortaleza();
-
-    } else {
 
         resetStrength();
 
+
         securityMessage.textContent =
-            traducciones.securityEmpty ||
-            "";
+            traducciones.securityEmpty;
+
+
+    } else {
+
+        actualizarFortaleza();
 
     }
 
@@ -1690,7 +1551,7 @@ function actualizarTextoFortaleza() {
 
 
 /* ==================================================
-   STRENGTH SEGMENTS
+   SEGMENTS
 ================================================== */
 
 function activarSegmentos(
@@ -1785,7 +1646,7 @@ function resetStrength() {
 
 
 /* ==================================================
-   RESET PASSWORD STATE
+   RESET PASSWORD
 ================================================== */
 
 function resetPasswordState() {
@@ -1823,7 +1684,7 @@ function resetPasswordState() {
 
 
 /* ==================================================
-   COPY BUTTON STATE
+   COPY STATE
 ================================================== */
 
 function actualizarEstadoCopy() {
@@ -1848,7 +1709,7 @@ function actualizarEstadoCopy() {
 
 
 /* ==================================================
-   SESSION HISTORY
+   HISTORY
 ================================================== */
 
 function guardarEnHistorial(
@@ -1868,11 +1729,6 @@ function guardarEnHistorial(
         password
     );
 
-
-    /*
-        Keep only the latest five
-        generated passwords.
-    */
 
     historial =
         historial.slice(
@@ -1950,10 +1806,6 @@ function actualizarHistorial() {
 
 
         password.textContent =
-            "••••••••••••";
-
-
-        password.title =
             historial[i];
 
 
@@ -1977,6 +1829,13 @@ function actualizarHistorial() {
 
         button.setAttribute(
             "aria-label",
+            traducciones.copyPassword ||
+            "Copy password"
+        );
+
+
+        button.setAttribute(
+            "title",
             traducciones.copyPassword ||
             "Copy password"
         );
@@ -2049,7 +1908,8 @@ async function copiarHistorial(
 
 function limpiarHistorial() {
 
-    historial = [];
+    historial =
+        [];
 
 
     actualizarHistorial();
@@ -2059,6 +1919,37 @@ function limpiarHistorial() {
         traducciones.historyCleared ||
         "Session history cleared"
     );
+
+}
+
+
+/* ==================================================
+   STATUS
+================================================== */
+
+function mostrarEstado(
+    mensaje
+) {
+
+    appStatus.textContent =
+        mensaje;
+
+
+    clearTimeout(
+        mostrarEstado.timeout
+    );
+
+
+    mostrarEstado.timeout =
+        setTimeout(
+            function () {
+
+                appStatus.textContent =
+                    "";
+
+            },
+            2500
+        );
 
 }
 
@@ -2092,10 +1983,7 @@ function guardarPreferencias() {
                 opciones.numeros,
 
             simbolos:
-                opciones.simbolos,
-
-            ambiguos:
-                opciones.ambiguos
+                opciones.simbolos
 
         })
 
@@ -2159,19 +2047,15 @@ function cargarPreferencias() {
             simbolos:
                 document.getElementById(
                     "simbolos"
-                ),
-
-            ambiguos:
-                document.getElementById(
-                    "ambiguos"
                 )
 
         };
 
 
-        let claves = Object.keys(
-            controles
-        );
+        let claves =
+            Object.keys(
+                controles
+            );
 
 
         for (
@@ -2214,54 +2098,7 @@ function cargarPreferencias() {
 
 
 /* ==================================================
-   STATUS
-================================================== */
-
-function mostrarEstado(
-    mensaje
-) {
-
-    appStatus.textContent =
-        mensaje;
-
-
-    clearTimeout(
-        mostrarEstado.timeout
-    );
-
-
-    mostrarEstado.timeout =
-        setTimeout(
-            function () {
-
-                appStatus.textContent =
-                    "";
-
-            },
-            2500
-        );
-
-}
-
-
-/*
-    Alias kept for readability in
-    a few interaction messages.
-*/
-
-function mostrarEstadoCorto(
-    mensaje
-) {
-
-    mostrarEstado(
-        mensaje
-    );
-
-}
-
-
-/* ==================================================
-   SETTINGS LISTENERS
+   CONFIGURATION
 ================================================== */
 
 function prepararEventosConfiguracion() {
@@ -2284,10 +2121,6 @@ function prepararEventosConfiguracion() {
 
         document.getElementById(
             "simbolos"
-        ),
-
-        document.getElementById(
-            "ambiguos"
         )
 
     ];
@@ -2314,153 +2147,6 @@ function prepararEventosConfiguracion() {
 
 
 /* ==================================================
-   SELF TESTS
-================================================== */
-
-/*
-    Run manually from DevTools:
-
-    runPasswordForgeTests()
-
-    These are lightweight internal checks,
-    not a replacement for a real test suite.
-*/
-
-function runPasswordForgeTests() {
-
-    let resultados = [];
-
-
-    function comprobar(
-        nombre,
-        condicion
-    ) {
-
-        resultados.push({
-
-            test:
-                nombre,
-
-            passed:
-                Boolean(condicion)
-
-        });
-
-    }
-
-
-    let password =
-        generarPasswordDePrueba(
-            20
-        );
-
-
-    comprobar(
-
-        "Password has expected length",
-
-        password.length === 20
-
-    );
-
-
-    comprobar(
-
-        "Random character belongs to charset",
-
-        caracteres.mayusculas.includes(
-            caracterAleatorio(
-                caracteres.mayusculas
-            )
-        )
-
-    );
-
-
-    let mezclada =
-        mezclarPassword(
-            "ABCDEFG"
-        );
-
-
-    comprobar(
-
-        "Shuffle preserves length",
-
-        mezclada.length === 7
-
-    );
-
-
-    comprobar(
-
-        "Strength function returns a valid score",
-
-        calcularFortaleza(
-            "Aa12!abcdefgh"
-        ).score >= 0 &&
-        calcularFortaleza(
-            "Aa12!abcdefgh"
-        ).score <= 4
-
-    );
-
-
-    console.table(
-        resultados
-    );
-
-
-    return resultados;
-
-}
-
-
-/* ==================================================
-   TEST PASSWORD
-================================================== */
-
-function generarPasswordDePrueba(
-    longitudPrueba
-) {
-
-    let resultado = "";
-
-
-    for (
-        let i = 0;
-        i < longitudPrueba;
-        i++
-    ) {
-
-        resultado +=
-            caracterAleatorio(
-                caracteres.mayusculas
-                +
-                caracteres.minusculas
-                +
-                caracteres.numeros
-                +
-                caracteres.simbolos
-            );
-
-    }
-
-
-    return resultado;
-
-}
-
-
-/* ==================================================
-   EXPOSE DEVELOPMENT TESTS
-================================================== */
-
-window.runPasswordForgeTests =
-    runPasswordForgeTests;
-
-
-/* ==================================================
    INITIALIZE
 ================================================== */
 
@@ -2472,6 +2158,11 @@ async function iniciarPasswordForge() {
     temaActual =
         detectarTema();
 
+
+    /*
+        Theme can be applied immediately
+        without waiting for the translation.
+    */
 
     aplicarTema();
 
@@ -2488,8 +2179,6 @@ async function iniciarPasswordForge() {
     actualizarEstadoCopy();
 
     actualizarHistorial();
-
-    prepararEventosConfiguracion();
 
 }
 

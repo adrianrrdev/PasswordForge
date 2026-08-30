@@ -42,10 +42,6 @@
             0.06
         );
 
-    --transition-fast: 180ms;
-
-    --transition-normal: 250ms;
-
 }
 
 
@@ -55,9 +51,11 @@
 
 html[data-theme="dark"] {
 
-    --background: #121212;
+    --background: #111111;
     --card: #1b1b1b;
     --surface: #242424;
+
+    --purple-light: #241a3b;
 
     --black: #f5f5f5;
     --gray: #aaa59f;
@@ -66,14 +64,12 @@ html[data-theme="dark"] {
     --border: #303030;
     --soft-border: #3a3a3a;
 
-    --purple-light: #251b3d;
-
     --shadow:
         0 20px 60px rgba(
             0,
             0,
             0,
-            0.28
+            0.30
         );
 
 }
@@ -107,8 +103,8 @@ body {
         sans-serif;
 
     transition:
-        background-color 250ms ease,
-        color 250ms ease;
+        background-color 280ms ease,
+        color 280ms ease;
 
 }
 
@@ -168,8 +164,7 @@ input:focus-visible,
 select:focus-visible {
 
     outline:
-        3px solid
-        rgba(
+        3px solid rgba(
             124,
             58,
             237,
@@ -232,6 +227,10 @@ select:focus-visible {
 }
 
 
+/* ==================================================
+   EYEBROW
+================================================== */
+
 .eyebrow {
 
     margin-bottom:
@@ -253,58 +252,6 @@ select:focus-visible {
 }
 
 
-.hero h1 {
-
-    margin-bottom:
-        30px;
-
-    font-family:
-        "Bungee",
-        sans-serif;
-
-    font-size:
-        clamp(
-            3.5rem,
-            8vw,
-            7rem
-        );
-
-    font-weight:
-        400;
-
-    line-height:
-        0.9;
-
-    letter-spacing:
-        -0.06em;
-
-    text-transform:
-        uppercase;
-
-}
-
-
-.subtitle {
-
-    max-width:
-        560px;
-
-    color:
-        var(--gray);
-
-    font-family:
-        "Lexend Deca",
-        sans-serif;
-
-    font-size:
-        1.1rem;
-
-    line-height:
-        1.6;
-
-}
-
-
 /* ==================================================
    TOP CONTROLS
 ================================================== */
@@ -322,6 +269,10 @@ select:focus-visible {
 
 }
 
+
+/* ==================================================
+   LANGUAGE
+================================================== */
 
 .language-selector {
 
@@ -381,6 +332,14 @@ select:focus-visible {
     transform:
         translateY(-1px);
 
+    box-shadow:
+        0 6px 18px rgba(
+            0,
+            0,
+            0,
+            0.06
+        );
+
 }
 
 
@@ -424,6 +383,10 @@ select:focus-visible {
 }
 
 
+/* ==================================================
+   THEME BUTTON
+================================================== */
+
 .theme-button {
 
     width:
@@ -432,20 +395,8 @@ select:focus-visible {
     height:
         40px;
 
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        12px;
-
-    background:
-        var(--card);
-
-    color:
-        var(--purple);
-
-    cursor:
-        pointer;
+    padding:
+        0;
 
     display:
         flex;
@@ -456,10 +407,40 @@ select:focus-visible {
     justify-content:
         center;
 
+    background:
+        var(--card);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        12px;
+
+    color:
+        var(--purple);
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 4px 14px rgba(
+            0,
+            0,
+            0,
+            0.04
+        );
+
     transition:
-        transform 180ms ease,
-        background-color 180ms ease,
-        border-color 180ms ease;
+        transform 220ms
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        ),
+        background-color 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
 
 }
 
@@ -467,7 +448,11 @@ select:focus-visible {
 .theme-button:hover {
 
     transform:
-        translateY(-1px);
+        translateY(-1px)
+        scale(1.04);
+
+    background:
+        var(--purple-light);
 
     border-color:
         rgba(
@@ -477,8 +462,193 @@ select:focus-visible {
             0.35
         );
 
-    background:
-        var(--purple-light);
+}
+
+
+.theme-button:active {
+
+    transform:
+        scale(0.94);
+
+}
+
+
+/* ==================================================
+   THEME ICON
+================================================== */
+
+.theme-icon {
+
+    position:
+        relative;
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    display:
+        block;
+
+}
+
+
+.theme-icon svg {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    fill:
+        none;
+
+    stroke:
+        currentColor;
+
+    stroke-width:
+        1.8;
+
+    stroke-linecap:
+        round;
+
+    stroke-linejoin:
+        round;
+
+    transform-origin:
+        center;
+
+    transition:
+        opacity 260ms ease,
+        transform 360ms
+        cubic-bezier(
+            0.22,
+            1,
+            0.36,
+            1
+        );
+
+}
+
+
+/* Light mode */
+
+.sun-icon {
+
+    opacity:
+        1;
+
+    transform:
+        rotate(0)
+        scale(1);
+
+}
+
+
+.moon-icon {
+
+    opacity:
+        0;
+
+    transform:
+        rotate(-70deg)
+        scale(0.45);
+
+}
+
+
+/* Dark mode */
+
+html[data-theme="dark"]
+.sun-icon {
+
+    opacity:
+        0;
+
+    transform:
+        rotate(70deg)
+        scale(0.45);
+
+}
+
+
+html[data-theme="dark"]
+.moon-icon {
+
+    opacity:
+        1;
+
+    transform:
+        rotate(0)
+        scale(1);
+
+}
+
+
+/* ==================================================
+   TITLE
+================================================== */
+
+.hero h1 {
+
+    margin-bottom:
+        30px;
+
+    font-family:
+        "Bungee",
+        sans-serif;
+
+    font-size:
+        clamp(
+            3.5rem,
+            8vw,
+            7rem
+        );
+
+    font-weight:
+        400;
+
+    line-height:
+        0.9;
+
+    letter-spacing:
+        -0.06em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* ==================================================
+   SUBTITLE
+================================================== */
+
+.subtitle {
+
+    max-width:
+        560px;
+
+    color:
+        var(--gray);
+
+    font-family:
+        "Lexend Deca",
+        sans-serif;
+
+    font-size:
+        1.1rem;
+
+    line-height:
+        1.6;
 
 }
 
@@ -505,6 +675,8 @@ select:focus-visible {
         var(--shadow);
 
     transition:
+        background-color 280ms ease,
+        border-color 280ms ease,
         box-shadow 300ms ease;
 
 }
@@ -531,14 +703,14 @@ html[data-theme="dark"]
             0,
             0,
             0,
-            0.30
+            0.32
         );
 
 }
 
 
 /* ==================================================
-   LABELS
+   LABEL
 ================================================== */
 
 .section-label {
@@ -707,7 +879,7 @@ html[data-theme="dark"]
             0.36,
             1
         ),
-        background-color 200ms ease,
+        background-color 220ms ease,
         box-shadow 250ms ease;
 
 }
@@ -823,7 +995,7 @@ html[data-theme="dark"]
         14px;
 
     background:
-        var(--black);
+        #171717;
 
     border-radius:
         50%;
@@ -837,7 +1009,8 @@ html[data-theme="dark"]
     transition:
         transform 250ms ease,
         width 250ms ease,
-        height 250ms ease;
+        height 250ms ease,
+        background-color 250ms ease;
 
 }
 
@@ -929,6 +1102,34 @@ html[data-theme="dark"]
         transform:
             scale(1);
     }
+
+}
+
+
+/* DARK EYES */
+
+html[data-theme="dark"]
+.eye-ball {
+
+    background:
+        #fafafa;
+
+    border:
+        1px solid rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+}
+
+
+html[data-theme="dark"]
+.eye-pupil {
+
+    background:
+        #070707;
 
 }
 
@@ -1135,9 +1336,6 @@ html[data-theme="dark"]
     line-height:
         1.5;
 
-    transition:
-        opacity 180ms ease;
-
 }
 
 
@@ -1343,14 +1541,6 @@ html[data-theme="dark"]
 }
 
 
-.checkbox-wide {
-
-    grid-column:
-        1 / -1;
-
-}
-
-
 .checkbox input {
 
     position:
@@ -1397,13 +1587,7 @@ html[data-theme="dark"]
     transition:
         background-color 250ms ease,
         border-color 250ms ease,
-        transform 250ms
-        cubic-bezier(
-            0.22,
-            1,
-            0.36,
-            1
-        );
+        transform 250ms ease;
 
 }
 
@@ -1420,12 +1604,10 @@ html[data-theme="dark"]
         14px;
 
     border-right:
-        3px solid
-        #ffffff;
+        3px solid #ffffff;
 
     border-bottom:
-        3px solid
-        #ffffff;
+        3px solid #ffffff;
 
     opacity:
         0;
@@ -1566,15 +1748,6 @@ html[data-theme="dark"]
 }
 
 
-.history-heading
-.section-label {
-
-    margin-bottom:
-        12px;
-
-}
-
-
 .clear-history-button {
 
     padding:
@@ -1600,8 +1773,8 @@ html[data-theme="dark"]
 
     transition:
         background-color 180ms ease,
-        color 180ms ease,
-        border-color 180ms ease;
+        border-color 180ms ease,
+        color 180ms ease;
 
 }
 
@@ -1739,6 +1912,9 @@ html[data-theme="dark"]
     white-space:
         nowrap;
 
+    color:
+        var(--black);
+
     font-family:
         "Lexend Deca",
         sans-serif;
@@ -1759,6 +1935,9 @@ html[data-theme="dark"]
 
     height:
         32px;
+
+    flex-shrink:
+        0;
 
     border:
         1px solid var(--border);
@@ -1819,6 +1998,10 @@ html[data-theme="dark"]
 
 }
 
+
+/* ==================================================
+   COPY
+================================================== */
 
 .copy-button {
 
@@ -2111,17 +2294,6 @@ html[data-theme="dark"]
 }
 
 
-.primary-button.loading {
-
-    cursor:
-        wait;
-
-    opacity:
-        0.8;
-
-}
-
-
 /* ==================================================
    STATUS
 ================================================== */
@@ -2223,8 +2395,8 @@ footer {
 
     .hero-top {
 
-        align-items:
-            flex-start;
+        gap:
+            12px;
 
     }
 
@@ -2349,14 +2521,6 @@ footer {
     }
 
 
-    .checkbox-wide {
-
-        grid-column:
-            auto;
-
-    }
-
-
     .actions {
 
         grid-template-columns:
@@ -2385,9 +2549,6 @@ footer {
     *::before,
     *::after {
 
-        scroll-behavior:
-            auto !important;
-
         animation-duration:
             0.01ms !important;
 
@@ -2396,6 +2557,9 @@ footer {
 
         transition-duration:
             0.01ms !important;
+
+        scroll-behavior:
+            auto !important;
 
     }
 

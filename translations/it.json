@@ -1,10 +1,10 @@
 {
-    "eyebrow": "PROJECT Z · TOOL #001",
+    "eyebrow": "PROJECT Z · STRUMENTO #001",
     "title": "Password Forge",
     "subtitle": "Crea password forti e sicure in pochi secondi.",
 
     "passwordLabel": "Password",
-    "strengthLabel": "Robustezza della password",
+    "strengthLabel": "Sicurezza della password",
     "lengthLabel": "Lunghezza",
     "characterSetLabel": "Set di caratteri",
 
@@ -15,7 +15,13 @@
 
     "generate": "Genera password",
 
-    "footer": "Creato con HTML & CSS · ProyectoZ",
+    "historyLabel": "Cronologia della sessione",
+    "historyEmpty": "Le password generate durante questa sessione appariranno qui.",
+    "clearHistory": "Cancella",
+
+    "footer": "Creato con HTML, CSS, JAVASCRIPT e JSON · ProyectoZ",
+
+    "languageSelector": "Lingua",
 
     "waiting": "In attesa",
     "veryWeak": "Molto debole",
@@ -30,5 +36,25 @@
 
     "showPassword": "Mostra password",
     "hidePassword": "Nascondi password",
-    "copyPassword": "Copia password"
+    "copyPassword": "Copia password",
+
+    "copied": "Password copiata",
+    "copyError": "Impossibile copiare la password",
+
+    "securityEmpty": "Genera una password per vedere i consigli di sicurezza.",
+    "securityGood": "Buona lunghezza e buona varietà di caratteri.",
+
+    "tipLength": "Usa almeno 8 caratteri.",
+    "tipLonger": "Considera di usare 12 o più caratteri.",
+    "tipUppercase": "Aggiungi lettere maiuscole.",
+    "tipLowercase": "Aggiungi lettere minuscole.",
+    "tipNumbers": "Aggiungi numeri.",
+    "tipSymbols": "Aggiungi simboli.",
+    "tipRepetition": "Evita caratteri ripetuti.",
+    "tipSequence": "Evita sequenze ovvie.",
+
+    "historyCleared": "Cronologia della sessione cancellata",
+
+    "darkTheme": "Passa al tema scuro",
+    "lightTheme": "Passa al tema chiaro"
 }

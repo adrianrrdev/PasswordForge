@@ -1,12 +1,12 @@
 {
-    "eyebrow": "PROJECT Z · TOOL #001",
+    "eyebrow": "PROJECT Z · OUTIL #001",
     "title": "Password Forge",
     "subtitle": "Créez des mots de passe forts et sécurisés en quelques secondes.",
 
     "passwordLabel": "Mot de passe",
-    "strengthLabel": "Force du mot de passe",
+    "strengthLabel": "Robustesse du mot de passe",
     "lengthLabel": "Longueur",
-    "characterSetLabel": "Jeu de caractères",
+    "characterSetLabel": "Ensemble de caractères",
 
     "uppercase": "Majuscules",
     "lowercase": "Minuscules",
@@ -15,14 +15,20 @@
 
     "generate": "Générer le mot de passe",
 
-    "footer": "Propulsé par HTML & CSS · ProyectoZ",
+    "historyLabel": "Historique de session",
+    "historyEmpty": "Les mots de passe générés pendant cette session apparaîtront ici.",
+    "clearHistory": "Effacer",
+
+    "footer": "Créé avec HTML, CSS, JAVASCRIPT et JSON · ProyectoZ",
+
+    "languageSelector": "Langue",
 
     "waiting": "En attente",
     "veryWeak": "Très faible",
     "weak": "Faible",
-    "medium": "Moyen",
-    "strong": "Fort",
-    "veryStrong": "Très fort",
+    "medium": "Moyenne",
+    "strong": "Forte",
+    "veryStrong": "Très forte",
 
     "generateFirst": "Générez d'abord un mot de passe",
     "lengthError": "La longueur doit être comprise entre 4 et 64",
@@ -30,5 +36,25 @@
 
     "showPassword": "Afficher le mot de passe",
     "hidePassword": "Masquer le mot de passe",
-    "copyPassword": "Copier le mot de passe"
+    "copyPassword": "Copier le mot de passe",
+
+    "copied": "Mot de passe copié",
+    "copyError": "Impossible de copier le mot de passe",
+
+    "securityEmpty": "Générez un mot de passe pour voir les recommandations de sécurité.",
+    "securityGood": "Bonne longueur et bonne variété de caractères.",
+
+    "tipLength": "Utilisez au moins 8 caractères.",
+    "tipLonger": "Envisagez d'utiliser 12 caractères ou plus.",
+    "tipUppercase": "Ajoutez des lettres majuscules.",
+    "tipLowercase": "Ajoutez des lettres minuscules.",
+    "tipNumbers": "Ajoutez des chiffres.",
+    "tipSymbols": "Ajoutez des symboles.",
+    "tipRepetition": "Évitez les caractères répétés.",
+    "tipSequence": "Évitez les séquences évidentes.",
+
+    "historyCleared": "Historique de session effacé",
+
+    "darkTheme": "Passer au thème sombre",
+    "lightTheme": "Passer au thème clair"
 }

@@ -12,7 +12,7 @@
 
     <meta
         name="description"
-        content="Password Forge — a responsive password generator with strength analysis and multilingual support."
+        content="Password Forge — a responsive password generator with multilingual support."
     >
 
     <meta
@@ -81,26 +81,20 @@
 
             <div class="hero-top">
 
-                <div>
+                <p
+                    class="eyebrow"
+                    data-i18n="eyebrow"
+                >
+                    PROJECT Z · TOOL #001
+                </p>
 
-                    <p
-                        class="eyebrow"
-                        data-i18n="eyebrow"
-                    >
-                        PROJECT Z · TOOL #001
-                    </p>
-
-                </div>
-
-
-                <!-- =========================
-                     TOP CONTROLS
-                ========================== -->
 
                 <div class="top-controls">
 
 
-                    <!-- LANGUAGE -->
+                    <!-- =========================
+                         LANGUAGE
+                    ========================== -->
 
                     <label
                         class="language-selector"
@@ -154,7 +148,10 @@
                     </label>
 
 
-                    <!-- THEME -->
+
+                    <!-- =========================
+                         THEME
+                    ========================== -->
 
                     <button
                         type="button"
@@ -166,10 +163,103 @@
                     >
 
                         <span
+                            class="theme-icon"
                             id="themeIcon"
                             aria-hidden="true"
                         >
-                            ☾
+
+                            <!-- SUN -->
+
+                            <svg
+                                class="sun-icon"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="4"
+                                ></circle>
+
+                                <line
+                                    x1="12"
+                                    y1="2"
+                                    x2="12"
+                                    y2="5"
+                                ></line>
+
+                                <line
+                                    x1="12"
+                                    y1="19"
+                                    x2="12"
+                                    y2="22"
+                                ></line>
+
+                                <line
+                                    x1="2"
+                                    y1="12"
+                                    x2="5"
+                                    y2="12"
+                                ></line>
+
+                                <line
+                                    x1="19"
+                                    y1="12"
+                                    x2="22"
+                                    y2="12"
+                                ></line>
+
+                                <line
+                                    x1="4.9"
+                                    y1="4.9"
+                                    x2="7"
+                                    y2="7"
+                                ></line>
+
+                                <line
+                                    x1="17"
+                                    y1="17"
+                                    x2="19.1"
+                                    y2="19.1"
+                                ></line>
+
+                                <line
+                                    x1="19.1"
+                                    y1="4.9"
+                                    x2="17"
+                                    y2="7"
+                                ></line>
+
+                                <line
+                                    x1="7"
+                                    y1="17"
+                                    x2="4.9"
+                                    y2="19.1"
+                                ></line>
+
+                            </svg>
+
+
+                            <!-- MOON -->
+
+                            <svg
+                                class="moon-icon"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <path
+                                    d="
+                                        M20 15.5
+                                        A8.5 8.5 0 0 1
+                                        8.5 4
+                                        A8.5 8.5 0 1 0
+                                        20 15.5
+                                        Z
+                                    "
+                                ></path>
+
+                            </svg>
+
                         </span>
 
                     </button>
@@ -196,7 +286,7 @@
 
 
         <!-- =========================
-             MAIN CARD
+             PASSWORD CARD
         ========================== -->
 
         <section class="password-card">
@@ -229,7 +319,9 @@
                         </p>
 
 
-                        <!-- SHOW / HIDE -->
+                        <!-- =========================
+                             EYE BUTTON
+                        ========================== -->
 
                         <button
                             type="button"
@@ -267,7 +359,7 @@
 
 
                 <!-- =========================
-                     PASSWORD STRENGTH
+                     STRENGTH
                 ========================== -->
 
                 <div
@@ -319,8 +411,6 @@
 
                     </div>
 
-
-                    <!-- SECURITY MESSAGE -->
 
                     <p
                         class="security-message"
@@ -396,7 +486,6 @@
 
                             <span class="check-box"></span>
 
-
                             <span class="checkbox-text">
 
                                 <strong data-i18n="uppercase">
@@ -424,7 +513,6 @@
                             >
 
                             <span class="check-box"></span>
-
 
                             <span class="checkbox-text">
 
@@ -454,7 +542,6 @@
 
                             <span class="check-box"></span>
 
-
                             <span class="checkbox-text">
 
                                 <strong data-i18n="numbers">
@@ -483,7 +570,6 @@
 
                             <span class="check-box"></span>
 
-
                             <span class="checkbox-text">
 
                                 <strong data-i18n="symbols">
@@ -492,35 +578,6 @@
 
                                 <small>
                                     !@#$...
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-
-                        <!-- AMBIGUOUS -->
-
-                        <label class="checkbox checkbox-wide">
-
-                            <input
-                                type="checkbox"
-                                id="ambiguos"
-                                checked
-                            >
-
-                            <span class="check-box"></span>
-
-
-                            <span class="checkbox-text">
-
-                                <strong data-i18n="ambiguous">
-                                    Ambiguous characters
-                                </strong>
-
-                                <small>
-                                    0 O 1 l I
                                 </small>
 
                             </span>
@@ -656,10 +713,9 @@
                     Generate password
                 </button>
 
+
             </div>
 
-
-            <!-- STATUS -->
 
             <p
                 class="app-status"
@@ -680,7 +736,7 @@
         <footer>
 
             <span data-i18n="footer">
-                Built with HTML & CSS · ProyectoZ
+                Built with HTML & CSS & JAVASCRIPT & JSON · ProyectoZ
             </span>
 
         </footer>

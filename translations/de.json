@@ -1,7 +1,7 @@
 {
     "eyebrow": "PROJECT Z · TOOL #001",
     "title": "Password Forge",
-    "subtitle": "Erstellen Sie starke und sichere Passwörter in Sekundenschnelle.",
+    "subtitle": "Erstelle starke und sichere Passwörter in wenigen Sekunden.",
 
     "passwordLabel": "Passwort",
     "strengthLabel": "Passwortstärke",
@@ -15,20 +15,46 @@
 
     "generate": "Passwort generieren",
 
-    "footer": "Erstellt mit HTML & CSS · ProyectoZ",
+    "historyLabel": "Sitzungsverlauf",
+    "historyEmpty": "Während dieser Sitzung generierte Passwörter werden hier angezeigt.",
+    "clearHistory": "Löschen",
 
-    "waiting": "Wartend",
+    "footer": "Erstellt mit HTML, CSS, JAVASCRIPT und JSON · ProyectoZ",
+
+    "languageSelector": "Sprache",
+
+    "waiting": "Warten",
     "veryWeak": "Sehr schwach",
     "weak": "Schwach",
     "medium": "Mittel",
     "strong": "Stark",
     "veryStrong": "Sehr stark",
 
-    "generateFirst": "Generieren Sie zuerst ein Passwort",
+    "generateFirst": "Generiere zuerst ein Passwort",
     "lengthError": "Die Länge muss zwischen 4 und 64 liegen",
-    "selectOption": "Wählen Sie mindestens eine Option",
+    "selectOption": "Wähle mindestens eine Option",
 
     "showPassword": "Passwort anzeigen",
     "hidePassword": "Passwort ausblenden",
-    "copyPassword": "Passwort kopieren"
+    "copyPassword": "Passwort kopieren",
+
+    "copied": "Passwort kopiert",
+    "copyError": "Passwort konnte nicht kopiert werden",
+
+    "securityEmpty": "Generiere ein Passwort, um Sicherheitsempfehlungen zu sehen.",
+    "securityGood": "Gute Länge und gute Zeichenvielfalt.",
+
+    "tipLength": "Verwende mindestens 8 Zeichen.",
+    "tipLonger": "Verwende möglichst 12 oder mehr Zeichen.",
+    "tipUppercase": "Füge Großbuchstaben hinzu.",
+    "tipLowercase": "Füge Kleinbuchstaben hinzu.",
+    "tipNumbers": "Füge Zahlen hinzu.",
+    "tipSymbols": "Füge Symbole hinzu.",
+    "tipRepetition": "Vermeide wiederholte Zeichen.",
+    "tipSequence": "Vermeide offensichtliche Sequenzen.",
+
+    "historyCleared": "Sitzungsverlauf gelöscht",
+
+    "darkTheme": "Dunkles Design aktivieren",
+    "lightTheme": "Helles Design aktivieren"
 }

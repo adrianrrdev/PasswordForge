@@ -15,7 +15,13 @@
 
     "generate": "Generate password",
 
-    "footer": "Built with HTML & CSS · ProyectoZ",
+    "historyLabel": "Session history",
+    "historyEmpty": "Passwords generated during this session will appear here.",
+    "clearHistory": "Clear",
+
+    "footer": "Built with HTML & CSS & JAVASCRIPT & JSON · ProyectoZ",
+
+    "languageSelector": "Language",
 
     "waiting": "Waiting",
     "veryWeak": "Very weak",
@@ -30,5 +36,25 @@
 
     "showPassword": "Show password",
     "hidePassword": "Hide password",
-    "copyPassword": "Copy password"
+    "copyPassword": "Copy password",
+
+    "copied": "Password copied",
+    "copyError": "Could not copy password",
+
+    "securityEmpty": "Generate a password to see security recommendations.",
+    "securityGood": "Good length and character variety.",
+
+    "tipLength": "Use at least 8 characters.",
+    "tipLonger": "Consider using 12 or more characters.",
+    "tipUppercase": "Add uppercase letters.",
+    "tipLowercase": "Add lowercase letters.",
+    "tipNumbers": "Add numbers.",
+    "tipSymbols": "Add symbols.",
+    "tipRepetition": "Avoid repeated characters.",
+    "tipSequence": "Avoid obvious sequences.",
+
+    "historyCleared": "Session history cleared",
+
+    "darkTheme": "Switch to dark theme",
+    "lightTheme": "Switch to light theme"
 }

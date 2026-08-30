@@ -15,7 +15,13 @@
 
     "generate": "Generar contraseña",
 
-    "footer": "Hecho con HTML y CSS · ProyectoZ",
+    "historyLabel": "Historial de sesión",
+    "historyEmpty": "Las contraseñas generadas durante esta sesión aparecerán aquí.",
+    "clearHistory": "Limpiar",
+
+    "footer": "Hecho con HTML, CSS, JAVASCRIPT y JSON · ProyectoZ",
+
+    "languageSelector": "Idioma",
 
     "waiting": "Esperando",
     "veryWeak": "Muy débil",
@@ -25,10 +31,30 @@
     "veryStrong": "Muy fuerte",
 
     "generateFirst": "Genera una contraseña primero",
-    "lengthError": "La longitud debe ser de 4 a 64",
+    "lengthError": "La longitud debe estar entre 4 y 64",
     "selectOption": "Selecciona al menos una opción",
 
     "showPassword": "Mostrar contraseña",
     "hidePassword": "Ocultar contraseña",
-    "copyPassword": "Copiar contraseña"
+    "copyPassword": "Copiar contraseña",
+
+    "copied": "Contraseña copiada",
+    "copyError": "No se pudo copiar la contraseña",
+
+    "securityEmpty": "Genera una contraseña para ver recomendaciones de seguridad.",
+    "securityGood": "Buena longitud y variedad de caracteres.",
+
+    "tipLength": "Usa al menos 8 caracteres.",
+    "tipLonger": "Considera usar 12 caracteres o más.",
+    "tipUppercase": "Añade letras mayúsculas.",
+    "tipLowercase": "Añade letras minúsculas.",
+    "tipNumbers": "Añade números.",
+    "tipSymbols": "Añade símbolos.",
+    "tipRepetition": "Evita repetir caracteres.",
+    "tipSequence": "Evita secuencias obvias.",
+
+    "historyCleared": "Historial de sesión limpiado",
+
+    "darkTheme": "Cambiar a modo oscuro",
+    "lightTheme": "Cambiar a modo claro"
 }
