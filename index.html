@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
 
@@ -12,7 +12,13 @@
 
     <meta
         name="description"
-        content="Password Forge — secure password generator built with HTML, CSS and JavaScript."
+        content="Password Forge — a responsive password generator with strength analysis and multilingual support."
+    >
+
+    <meta
+        name="theme-color"
+        content="#f6f5f2"
+        id="themeColor"
     >
 
     <title>Password Forge</title>
@@ -75,64 +81,98 @@
 
             <div class="hero-top">
 
-                <p
-                    class="eyebrow"
-                    data-i18n="eyebrow"
-                >
-                    PROJECT Z · TOOL #001
-                </p>
+                <div>
+
+                    <p
+                        class="eyebrow"
+                        data-i18n="eyebrow"
+                    >
+                        PROJECT Z · TOOL #001
+                    </p>
+
+                </div>
 
 
                 <!-- =========================
-                     LANGUAGE SELECTOR
+                     TOP CONTROLS
                 ========================== -->
 
-                <div class="language-selector">
+                <div class="top-controls">
 
-                    <span
-                        class="language-icon"
-                        aria-hidden="true"
-                    >
-                        ◎
-                    </span>
 
+                    <!-- LANGUAGE -->
 
                     <label
+                        class="language-selector"
                         for="language"
-                        class="sr-only"
-                        data-i18n="languageSelector"
                     >
-                        Language
+
+                        <span
+                            class="language-icon"
+                            aria-hidden="true"
+                        >
+                            ◎
+                        </span>
+
+
+                        <span
+                            class="sr-only"
+                            data-i18n="languageSelector"
+                        >
+                            Language
+                        </span>
+
+
+                        <select
+                            id="language"
+                            aria-label="Language"
+                            onchange="cambiarIdioma()"
+                        >
+
+                            <option value="en">
+                                EN
+                            </option>
+
+                            <option value="es">
+                                ES
+                            </option>
+
+                            <option value="fr">
+                                FR
+                            </option>
+
+                            <option value="de">
+                                DE
+                            </option>
+
+                            <option value="it">
+                                IT
+                            </option>
+
+                        </select>
+
                     </label>
 
 
-                    <select
-                        id="language"
-                        aria-label="Language"
-                        onchange="cambiarIdioma()"
+                    <!-- THEME -->
+
+                    <button
+                        type="button"
+                        class="theme-button"
+                        id="themeButton"
+                        onclick="cambiarTema()"
+                        aria-label="Change theme"
+                        title="Change theme"
                     >
 
-                        <option value="en">
-                            EN
-                        </option>
+                        <span
+                            id="themeIcon"
+                            aria-hidden="true"
+                        >
+                            ☾
+                        </span>
 
-                        <option value="es">
-                            ES
-                        </option>
-
-                        <option value="fr">
-                            FR
-                        </option>
-
-                        <option value="de">
-                            DE
-                        </option>
-
-                        <option value="it">
-                            IT
-                        </option>
-
-                    </select>
+                    </button>
 
                 </div>
 
@@ -156,7 +196,7 @@
 
 
         <!-- =========================
-             PASSWORD CARD
+             MAIN CARD
         ========================== -->
 
         <section class="password-card">
@@ -183,14 +223,13 @@
                         <p
                             id="passwordDisplay"
                             aria-live="polite"
+                            aria-atomic="true"
                         >
                             ••••••••••••••••
                         </p>
 
 
-                        <!-- =========================
-                             EYE BUTTON
-                        ========================== -->
+                        <!-- SHOW / HIDE -->
 
                         <button
                             type="button"
@@ -226,6 +265,7 @@
                 </div>
 
 
+
                 <!-- =========================
                      PASSWORD STRENGTH
                 ========================== -->
@@ -242,7 +282,10 @@
                         </span>
 
 
-                        <strong id="strengthText">
+                        <strong
+                            id="strengthText"
+                            aria-live="polite"
+                        >
                             Waiting
                         </strong>
 
@@ -276,6 +319,17 @@
 
                     </div>
 
+
+                    <!-- SECURITY MESSAGE -->
+
+                    <p
+                        class="security-message"
+                        id="securityMessage"
+                        aria-live="polite"
+                    >
+                        Generate a password to see security recommendations.
+                    </p>
+
                 </div>
 
             </div>
@@ -289,9 +343,7 @@
             <div class="settings-layout">
 
 
-                <!-- =========================
-                     LENGTH
-                ========================== -->
+                <!-- LENGTH -->
 
                 <div class="length-section">
 
@@ -317,9 +369,7 @@
 
 
 
-                <!-- =========================
-                     CHARACTER SET
-                ========================== -->
+                <!-- CHARACTER SET -->
 
                 <div class="character-section">
 
@@ -449,7 +499,85 @@
                         </label>
 
 
+
+                        <!-- AMBIGUOUS -->
+
+                        <label class="checkbox checkbox-wide">
+
+                            <input
+                                type="checkbox"
+                                id="ambiguos"
+                                checked
+                            >
+
+                            <span class="check-box"></span>
+
+
+                            <span class="checkbox-text">
+
+                                <strong data-i18n="ambiguous">
+                                    Ambiguous characters
+                                </strong>
+
+                                <small>
+                                    0 O 1 l I
+                                </small>
+
+                            </span>
+
+                        </label>
+
+
                     </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================
+                 HISTORY
+            ========================== -->
+
+            <div class="history-section">
+
+                <div class="history-heading">
+
+                    <span
+                        class="section-label"
+                        data-i18n="historyLabel"
+                    >
+                        Session history
+                    </span>
+
+
+                    <button
+                        type="button"
+                        class="clear-history-button"
+                        id="clearHistoryButton"
+                        onclick="limpiarHistorial()"
+                        data-i18n="clearHistory"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="history-list"
+                    id="historyList"
+                    aria-live="polite"
+                >
+
+                    <p
+                        class="history-empty"
+                        id="historyEmpty"
+                        data-i18n="historyEmpty"
+                    >
+                        Passwords generated during this session will appear here.
+                    </p>
 
                 </div>
 
@@ -521,14 +649,24 @@
                 <button
                     type="button"
                     class="primary-button"
+                    id="generateButton"
                     onclick="generarPassword()"
                     data-i18n="generate"
                 >
                     Generate password
                 </button>
 
-
             </div>
+
+
+            <!-- STATUS -->
+
+            <p
+                class="app-status"
+                id="appStatus"
+                aria-live="polite"
+                aria-atomic="true"
+            ></p>
 
 
         </section>
@@ -539,19 +677,17 @@
              FOOTER
         ========================== -->
 
-        <footer data-i18n="footer">
+        <footer>
 
-            Built with HTML & CSS · ProyectoZ
+            <span data-i18n="footer">
+                Built with HTML & CSS · ProyectoZ
+            </span>
 
         </footer>
 
 
     </main>
 
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
 
     <script src="script.js"></script>
 
