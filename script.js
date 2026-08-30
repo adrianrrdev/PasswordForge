@@ -58,6 +58,19 @@ let caracteres = {
 
 
 /* ==================================================
+   IDIOMAS DISPONIBLES
+================================================== */
+
+let idiomasSoportados = [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "it"
+];
+
+
+/* ==================================================
    ESTADO
 ================================================== */
 
@@ -76,19 +89,19 @@ let traducciones = {};
 
 function detectarIdioma() {
 
+    /*
+        Primero comprobamos si el usuario
+        ya eligió manualmente un idioma.
+    */
+
     let idiomaGuardado =
         localStorage.getItem(
             "passwordForgeLanguage"
         );
 
 
-    /*
-        Si el usuario ya eligió un idioma,
-        respetamos su elección.
-    */
-
     if (
-        esIdiomaSoportado(
+        idiomasSoportados.includes(
             idiomaGuardado
         )
     ) {
@@ -99,14 +112,33 @@ function detectarIdioma() {
 
 
     /*
-        navigator.languages contiene las
-        preferencias del navegador ordenadas.
+        Después miramos las preferencias
+        del navegador.
+
+        navigator.languages puede contener
+        valores como:
+
+        es-ES
+        en-US
+        fr-FR
+        de-DE
+        it-IT
     */
 
     let idiomasNavegador =
-        navigator.languages || [
+        navigator.languages;
+
+
+    if (
+        !idiomasNavegador ||
+        idiomasNavegador.length === 0
+    ) {
+
+        idiomasNavegador = [
             navigator.language
         ];
+
+    }
 
 
     for (
@@ -121,8 +153,17 @@ function detectarIdioma() {
             .split("-")[0];
 
 
+        /*
+            También soportamos variantes
+            como es_ES.
+        */
+
+        idioma =
+            idioma.split("_")[0];
+
+
         if (
-            esIdiomaSoportado(
+            idiomasSoportados.includes(
                 idioma
             )
         ) {
@@ -135,7 +176,7 @@ function detectarIdioma() {
 
 
     /*
-        Inglés como idioma de respaldo.
+        Idioma predeterminado.
     */
 
     return "en";
@@ -144,24 +185,7 @@ function detectarIdioma() {
 
 
 /* ==================================================
-   COMPROBAR IDIOMA
-================================================== */
-
-function esIdiomaSoportado(idioma) {
-
-    return (
-        idioma === "en" ||
-        idioma === "es" ||
-        idioma === "fr" ||
-        idioma === "de" ||
-        idioma === "it"
-    );
-
-}
-
-
-/* ==================================================
-   CARGAR IDIOMA
+   CARGAR JSON
 ================================================== */
 
 async function cargarIdioma(idioma) {
@@ -170,9 +194,12 @@ async function cargarIdioma(idioma) {
 
         let respuesta =
             await fetch(
-                "translations/"
+                "./translations/"
                 + idioma
-                + ".json"
+                + ".json",
+                {
+                    cache: "no-store"
+                }
             );
 
 
@@ -181,14 +208,19 @@ async function cargarIdioma(idioma) {
         ) {
 
             throw new Error(
-                "Translation file not found"
+                "Translation file not found: "
+                + idioma
             );
 
         }
 
 
-        traducciones =
+        let datos =
             await respuesta.json();
+
+
+        traducciones =
+            datos;
 
 
         idiomaActual =
@@ -208,9 +240,15 @@ async function cargarIdioma(idioma) {
 
     } catch (error) {
 
+        console.error(
+            "Error loading language:",
+            error
+        );
+
+
         /*
             Si falla el idioma solicitado,
-            usamos inglés como respaldo.
+            intentamos cargar inglés.
         */
 
         if (
@@ -218,13 +256,6 @@ async function cargarIdioma(idioma) {
         ) {
 
             await cargarIdioma("en");
-
-        } else {
-
-            console.error(
-                "Could not load translations:",
-                error
-            );
 
         }
 
@@ -252,14 +283,16 @@ function aplicarTraducciones() {
     ) {
 
         let clave =
-            elementos[i]
-            .getAttribute(
+            elementos[i].getAttribute(
                 "data-i18n"
             );
 
 
         if (
-            traducciones[clave]
+            Object.prototype.hasOwnProperty.call(
+                traducciones,
+                clave
+            )
         ) {
 
             elementos[i].textContent =
@@ -288,7 +321,7 @@ async function cambiarIdioma() {
 
 
     if (
-        !esIdiomaSoportado(
+        !idiomasSoportados.includes(
             nuevoIdioma
         )
     ) {
@@ -297,6 +330,10 @@ async function cambiarIdioma() {
 
     }
 
+
+    /*
+        Guardamos la elección del usuario.
+    */
 
     localStorage.setItem(
         "passwordForgeLanguage",
@@ -312,13 +349,15 @@ async function cambiarIdioma() {
 
 
 /* ==================================================
-   ATRIBUTOS
+   ACTUALIZAR ATRIBUTOS
 ================================================== */
 
 function actualizarAtributos() {
 
     if (
-        !traducciones.showPassword
+        Object.keys(
+            traducciones
+        ).length === 0
     ) {
 
         return;
@@ -437,7 +476,9 @@ function generarPassword() {
         );
 
 
-    /* VALIDAR LONGITUD */
+    /* =========================
+       VALIDAR LONGITUD
+    ========================== */
 
     if (
         Number.isNaN(
@@ -478,7 +519,9 @@ function generarPassword() {
     }
 
 
-    /* OPCIONES */
+    /* =========================
+       LEER OPCIONES
+    ========================== */
 
     let opciones = {
 
@@ -505,7 +548,9 @@ function generarPassword() {
     };
 
 
-    /* CARACTERES DISPONIBLES */
+    /* =========================
+       CARACTERES DISPONIBLES
+    ========================== */
 
     let disponibles = "";
 
@@ -550,7 +595,9 @@ function generarPassword() {
     }
 
 
-    /* NINGUNA OPCIÓN */
+    /* =========================
+       NINGUNA OPCIÓN
+    ========================== */
 
     if (
         disponibles === ""
@@ -587,14 +634,16 @@ function generarPassword() {
     }
 
 
-    /* CREAR PASSWORD */
+    /* =========================
+       CREAR PASSWORD
+    ========================== */
 
     let nuevaPassword = "";
 
 
     /*
-        Garantizamos al menos un
-        carácter de cada categoría.
+        Garantizamos al menos un carácter
+        de cada categoría seleccionada.
     */
 
     if (
@@ -645,10 +694,13 @@ function generarPassword() {
     }
 
 
-    /* COMPLETAR */
+    /* =========================
+       COMPLETAR LONGITUD
+    ========================== */
 
     while (
-        nuevaPassword.length <
+        nuevaPassword.length
+        <
         longitudPassword
     ) {
 
@@ -660,7 +712,9 @@ function generarPassword() {
     }
 
 
-    /* MEZCLAR */
+    /* =========================
+       MEZCLAR
+    ========================== */
 
     nuevaPassword =
         mezclarPassword(
@@ -668,16 +722,12 @@ function generarPassword() {
         );
 
 
-    /* GUARDAR */
+    /* =========================
+       GUARDAR
+    ========================== */
 
     passwordActual =
         nuevaPassword;
-
-
-    /*
-        Toda contraseña nueva empieza
-        oculta.
-    */
 
     passwordVisible =
         false;
@@ -899,6 +949,16 @@ function copiarPassword() {
                 );
 
             }
+        )
+        .catch(
+            function (error) {
+
+                console.error(
+                    "Could not copy password:",
+                    error
+                );
+
+            }
         );
 
 }
@@ -953,7 +1013,7 @@ function calcularFortaleza(password) {
     }
 
 
-    /* TIPOS DE CARACTERES */
+    /* MAYÚSCULAS */
 
     if (
         /[A-Z]/.test(password)
@@ -964,6 +1024,8 @@ function calcularFortaleza(password) {
     }
 
 
+    /* MINÚSCULAS */
+
     if (
         /[a-z]/.test(password)
     ) {
@@ -973,6 +1035,8 @@ function calcularFortaleza(password) {
     }
 
 
+    /* NÚMEROS */
+
     if (
         /[0-9]/.test(password)
     ) {
@@ -981,6 +1045,8 @@ function calcularFortaleza(password) {
 
     }
 
+
+    /* SÍMBOLOS */
 
     if (
         /[^A-Za-z0-9]/.test(password)
@@ -1132,8 +1198,14 @@ function actualizarTextoFortaleza() {
 
     } else {
 
-        strengthText.textContent =
-            traducciones.waiting;
+        if (
+            traducciones.waiting
+        ) {
+
+            strengthText.textContent =
+                traducciones.waiting;
+
+        }
 
     }
 
@@ -1228,18 +1300,35 @@ function resetStrength() {
 
 
 /* ==================================================
-   INICIALIZAR
+   INICIAR APLICACIÓN
 ================================================== */
 
 async function iniciarPasswordForge() {
 
-    idiomaActual =
+    /*
+        Detectamos el idioma antes de
+        cargar la traducción.
+    */
+
+    let idioma =
         detectarIdioma();
 
 
+    /*
+        Cargamos su JSON.
+    */
+
     await cargarIdioma(
-        idiomaActual
+        idioma
     );
+
+
+    /*
+        Dejamos el selector sincronizado.
+    */
+
+    language.value =
+        idioma;
 
 
     actualizarEstadoCopy();
