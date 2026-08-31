@@ -12,7 +12,7 @@
 
     <meta
         name="description"
-        content="Password Forge — a responsive password generator with multilingual support."
+        content="Password Forge — secure password generator with strength analysis and multilingual support."
     >
 
     <meta
@@ -89,12 +89,14 @@
                 </p>
 
 
+                <!-- =========================
+                     TOP CONTROLS
+                ========================== -->
+
                 <div class="top-controls">
 
 
-                    <!-- =========================
-                         LANGUAGE
-                    ========================== -->
+                    <!-- LANGUAGE -->
 
                     <label
                         class="language-selector"
@@ -148,10 +150,7 @@
                     </label>
 
 
-
-                    <!-- =========================
-                         THEME
-                    ========================== -->
+                    <!-- THEME -->
 
                     <button
                         type="button"
@@ -164,7 +163,6 @@
 
                         <span
                             class="theme-icon"
-                            id="themeIcon"
                             aria-hidden="true"
                         >
 
@@ -319,9 +317,7 @@
                         </p>
 
 
-                        <!-- =========================
-                             EYE BUTTON
-                        ========================== -->
+                        <!-- SHOW / HIDE -->
 
                         <button
                             type="button"
@@ -359,7 +355,7 @@
 
 
                 <!-- =========================
-                     STRENGTH
+                     PASSWORD STRENGTH
                 ========================== -->
 
                 <div
@@ -486,6 +482,7 @@
 
                             <span class="check-box"></span>
 
+
                             <span class="checkbox-text">
 
                                 <strong data-i18n="uppercase">
@@ -513,6 +510,7 @@
                             >
 
                             <span class="check-box"></span>
+
 
                             <span class="checkbox-text">
 
@@ -542,6 +540,7 @@
 
                             <span class="check-box"></span>
 
+
                             <span class="checkbox-text">
 
                                 <strong data-i18n="numbers">
@@ -569,6 +568,7 @@
                             >
 
                             <span class="check-box"></span>
+
 
                             <span class="checkbox-text">
 
@@ -612,7 +612,6 @@
                     <button
                         type="button"
                         class="clear-history-button"
-                        id="clearHistoryButton"
                         onclick="limpiarHistorial()"
                         data-i18n="clearHistory"
                     >
@@ -689,14 +688,6 @@
 
                     </svg>
 
-
-                    <span
-                        class="copy-check"
-                        aria-hidden="true"
-                    >
-                        ✓
-                    </span>
-
                 </button>
 
 
@@ -706,7 +697,6 @@
                 <button
                     type="button"
                     class="primary-button"
-                    id="generateButton"
                     onclick="generarPassword()"
                     data-i18n="generate"
                 >

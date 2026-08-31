@@ -29,20 +29,20 @@ let strength =
 let strengthText =
     document.getElementById("strengthText");
 
-let strength1 =
-    document.getElementById("strength1");
-
-let strength2 =
-    document.getElementById("strength2");
-
-let strength3 =
-    document.getElementById("strength3");
-
-let strength4 =
-    document.getElementById("strength4");
-
 let securityMessage =
     document.getElementById("securityMessage");
+
+let strengthSegments = [
+
+    document.getElementById("strength1"),
+
+    document.getElementById("strength2"),
+
+    document.getElementById("strength3"),
+
+    document.getElementById("strength4")
+
+];
 
 let historyList =
     document.getElementById("historyList");
@@ -110,7 +110,7 @@ let passwordRenderId = 0;
 
 
 /* ==================================================
-   LANGUAGE
+   LANGUAGE DETECTION
 ================================================== */
 
 function detectarIdioma() {
@@ -189,7 +189,7 @@ function detectarIdioma() {
 
 
 /* ==================================================
-   LOAD LANGUAGE JSON
+   LOAD LANGUAGE
 ================================================== */
 
 async function cargarIdioma(
@@ -291,11 +291,16 @@ function aplicarTraducciones() {
 
 
         if (
-            traducciones[clave]
+            Object.prototype.hasOwnProperty.call(
+                traducciones,
+                clave
+            )
         ) {
 
             elementos[i].textContent =
-                traducciones[clave];
+                traducciones[
+                    clave
+                ];
 
         }
 
@@ -307,6 +312,17 @@ function aplicarTraducciones() {
     actualizarTextoFortaleza();
 
     actualizarHistorial();
+
+
+    if (
+        passwordActual === ""
+    ) {
+
+        securityMessage.textContent =
+            traducciones.securityEmpty ||
+            "";
+
+    }
 
 }
 
@@ -386,11 +402,10 @@ function detectarTema() {
 
 function aplicarTema() {
 
-    document.documentElement
-        .setAttribute(
-            "data-theme",
-            temaActual
-        );
+    document.documentElement.setAttribute(
+        "data-theme",
+        temaActual
+    );
 
 
     if (
@@ -469,74 +484,6 @@ function cambiarTema() {
 
 
 /* ==================================================
-   ACCESSIBILITY
-================================================== */
-
-function actualizarAtributos() {
-
-    if (
-        Object.keys(
-            traducciones
-        ).length === 0
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        passwordVisible
-    ) {
-
-        eyeButton.setAttribute(
-            "aria-label",
-            traducciones.hidePassword
-        );
-
-        eyeButton.setAttribute(
-            "title",
-            traducciones.hidePassword
-        );
-
-    } else {
-
-        eyeButton.setAttribute(
-            "aria-label",
-            traducciones.showPassword
-        );
-
-        eyeButton.setAttribute(
-            "title",
-            traducciones.showPassword
-        );
-
-    }
-
-
-    copyButton.setAttribute(
-        "aria-label",
-        traducciones.copyPassword
-    );
-
-    copyButton.setAttribute(
-        "title",
-        traducciones.copyPassword
-    );
-
-
-    longitud.setAttribute(
-        "aria-label",
-        traducciones.lengthLabel
-    );
-
-
-    aplicarTema();
-
-}
-
-
-/* ==================================================
    RANDOM CHARACTER
 ================================================== */
 
@@ -584,8 +531,7 @@ function caracterAleatorio(
 
 
     return texto[
-        numero %
-        texto.length
+        numero % texto.length
     ];
 
 }
@@ -692,9 +638,7 @@ function generarPassword() {
         );
 
 
-    /* =========================
-       VALIDATE LENGTH
-    ========================== */
+    /* VALIDATION */
 
     if (
         !Number.isInteger(
@@ -708,23 +652,18 @@ function generarPassword() {
 
 
         passwordDisplay.textContent =
-            traducciones.lengthError;
+            traducciones.lengthError ||
+            "Length must be 4–64";
 
 
         resetStrength();
 
         actualizarEstadoCopy();
 
-        actualizarAtributos();
-
         return;
 
     }
 
-
-    /* =========================
-       OPTIONS
-    ========================== */
 
     let opciones =
         obtenerOpciones();
@@ -736,37 +675,32 @@ function generarPassword() {
         );
 
 
-    /* =========================
-       NO OPTIONS
-    ========================== */
+    /* NO SELECTED OPTIONS */
 
     if (
-        disponibles.length === 0
+        disponibles === ""
     ) {
 
         resetPasswordState();
 
 
         passwordDisplay.textContent =
-            traducciones.selectOption;
+            traducciones.selectOption ||
+            "Select at least one option";
 
 
         resetStrength();
 
         actualizarEstadoCopy();
 
-        actualizarAtributos();
-
         return;
 
     }
 
 
-    /* =========================
-       REQUIRED CHARACTERS
-    ========================== */
+    /* REQUIRED CHARACTERS */
 
-    let obligatorios =
+    let nuevaPassword =
         "";
 
 
@@ -774,7 +708,7 @@ function generarPassword() {
         opciones.mayusculas
     ) {
 
-        obligatorios +=
+        nuevaPassword +=
             caracterAleatorio(
                 caracteres.mayusculas
             );
@@ -786,7 +720,7 @@ function generarPassword() {
         opciones.minusculas
     ) {
 
-        obligatorios +=
+        nuevaPassword +=
             caracterAleatorio(
                 caracteres.minusculas
             );
@@ -798,7 +732,7 @@ function generarPassword() {
         opciones.numeros
     ) {
 
-        obligatorios +=
+        nuevaPassword +=
             caracterAleatorio(
                 caracteres.numeros
             );
@@ -810,7 +744,7 @@ function generarPassword() {
         opciones.simbolos
     ) {
 
-        obligatorios +=
+        nuevaPassword +=
             caracterAleatorio(
                 caracteres.simbolos
             );
@@ -818,13 +752,7 @@ function generarPassword() {
     }
 
 
-    /* =========================
-       CREATE
-    ========================== */
-
-    let nuevaPassword =
-        obligatorios;
-
+    /* FILL */
 
     while (
         nuevaPassword.length <
@@ -839,9 +767,7 @@ function generarPassword() {
     }
 
 
-    /* =========================
-       SHUFFLE
-    ========================== */
+    /* SHUFFLE */
 
     nuevaPassword =
         mezclarPassword(
@@ -849,13 +775,10 @@ function generarPassword() {
         );
 
 
-    /* =========================
-       SAVE
-    ========================== */
+    /* SAVE */
 
     passwordActual =
         nuevaPassword;
-
 
     passwordVisible =
         false;
@@ -889,6 +812,8 @@ function generarPassword() {
     actualizarFortaleza();
 
     actualizarAtributos();
+
+    guardarPreferencias();
 
 }
 
@@ -1017,7 +942,7 @@ function actualizarPassword() {
 
 
 /* ==================================================
-   SHOW / HIDE
+   SHOW / HIDE PASSWORD
 ================================================== */
 
 function mostrarOcultarPassword() {
@@ -1027,7 +952,8 @@ function mostrarOcultarPassword() {
     ) {
 
         let mensaje =
-            traducciones.generateFirst;
+            traducciones.generateFirst ||
+            "Generate a password first";
 
 
         passwordDisplay.textContent =
@@ -1067,7 +993,7 @@ function mostrarOcultarPassword() {
 
 
 /* ==================================================
-   COPY
+   COPY MAIN PASSWORD
 ================================================== */
 
 async function copiarPassword() {
@@ -1077,7 +1003,8 @@ async function copiarPassword() {
     ) {
 
         let mensaje =
-            traducciones.generateFirst;
+            traducciones.generateFirst ||
+            "Generate a password first";
 
 
         passwordDisplay.textContent =
@@ -1096,11 +1023,15 @@ async function copiarPassword() {
 
     try {
 
-        await navigator.clipboard
-            .writeText(
-                passwordActual
-            );
+        await navigator.clipboard.writeText(
+            passwordActual
+        );
 
+
+        /*
+            The copy button stays as a copy icon.
+            No check icon is shown.
+        */
 
         copyButton.classList.add(
             "copied"
@@ -1108,8 +1039,7 @@ async function copiarPassword() {
 
 
         mostrarEstado(
-            traducciones.copied
-            ||
+            traducciones.copied ||
             "Password copied"
         );
 
@@ -1122,7 +1052,7 @@ async function copiarPassword() {
                 );
 
             },
-            1200
+            900
         );
 
 
@@ -1135,8 +1065,7 @@ async function copiarPassword() {
 
 
         mostrarEstado(
-            traducciones.copyError
-            ||
+            traducciones.copyError ||
             "Could not copy password"
         );
 
@@ -1146,7 +1075,7 @@ async function copiarPassword() {
 
 
 /* ==================================================
-   STRENGTH
+   PASSWORD STRENGTH
 ================================================== */
 
 function calcularFortaleza(
@@ -1359,7 +1288,7 @@ function calcularFortaleza(
     ];
 
 
-    let minuscula =
+    let passwordMinuscula =
         password.toLowerCase();
 
 
@@ -1370,7 +1299,7 @@ function calcularFortaleza(
     ) {
 
         if (
-            minuscula.includes(
+            passwordMinuscula.includes(
                 secuencias[i]
             )
         ) {
@@ -1439,70 +1368,76 @@ function actualizarFortaleza() {
     resetStrength();
 
 
+    let etiquetas = [
+
+        traducciones.veryWeak ||
+            "Very weak",
+
+        traducciones.weak ||
+            "Weak",
+
+        traducciones.medium ||
+            "Medium",
+
+        traducciones.strong ||
+            "Strong",
+
+        traducciones.veryStrong ||
+            "Very strong"
+
+    ];
+
+
+    let indice =
+        Math.min(
+            resultado.score,
+            4
+        );
+
+
+    strengthText.textContent =
+        etiquetas[indice];
+
+
     if (
-        resultado.score === 0
+        resultado.score <= 1
     ) {
-
-        strengthText.textContent =
-            traducciones.veryWeak;
 
         strength.classList.add(
             "weak"
         );
-
-        activarSegmentos(1);
-
-    } else if (
-        resultado.score === 1
-    ) {
-
-        strengthText.textContent =
-            traducciones.weak;
-
-        strength.classList.add(
-            "weak"
-        );
-
-        activarSegmentos(1);
 
     } else if (
         resultado.score === 2
     ) {
 
-        strengthText.textContent =
-            traducciones.medium;
-
         strength.classList.add(
             "medium"
         );
-
-        activarSegmentos(2);
 
     } else if (
         resultado.score === 3
     ) {
 
-        strengthText.textContent =
-            traducciones.strong;
-
         strength.classList.add(
             "strong"
         );
 
-        activarSegmentos(3);
-
     } else {
-
-        strengthText.textContent =
-            traducciones.veryStrong;
 
         strength.classList.add(
             "very-strong"
         );
 
-        activarSegmentos(4);
-
     }
+
+
+    activarSegmentos(
+        Math.max(
+            resultado.score,
+            1
+        )
+    );
 
 
     if (
@@ -1510,7 +1445,8 @@ function actualizarFortaleza() {
     ) {
 
         securityMessage.textContent =
-            traducciones.securityGood;
+            traducciones.securityGood ||
+            "Good length and character variety.";
 
     } else {
 
@@ -1525,7 +1461,7 @@ function actualizarFortaleza() {
 
 
 /* ==================================================
-   STRENGTH TEXT
+   UPDATE STRENGTH TEXT
 ================================================== */
 
 function actualizarTextoFortaleza() {
@@ -1538,54 +1474,12 @@ function actualizarTextoFortaleza() {
 
 
         securityMessage.textContent =
-            traducciones.securityEmpty;
-
+            traducciones.securityEmpty ||
+            "";
 
     } else {
 
         actualizarFortaleza();
-
-    }
-
-}
-
-
-/* ==================================================
-   SEGMENTS
-================================================== */
-
-function activarSegmentos(
-    cantidad
-) {
-
-    let segmentos = [
-
-        strength1,
-        strength2,
-        strength3,
-        strength4
-
-    ];
-
-
-    for (
-        let i = 0;
-        i < cantidad;
-        i++
-    ) {
-
-        setTimeout(
-            function () {
-
-                segmentos[i]
-                    .classList
-                    .add(
-                        "active"
-                    );
-
-            },
-            i * 70
-        );
 
     }
 
@@ -1598,23 +1492,13 @@ function activarSegmentos(
 
 function resetStrength() {
 
-    let segmentos = [
-
-        strength1,
-        strength2,
-        strength3,
-        strength4
-
-    ];
-
-
     for (
         let i = 0;
-        i < segmentos.length;
+        i < strengthSegments.length;
         i++
     ) {
 
-        segmentos[i]
+        strengthSegments[i]
             .classList
             .remove(
                 "active"
@@ -1639,6 +1523,38 @@ function resetStrength() {
 
         strengthText.textContent =
             traducciones.waiting;
+
+    }
+
+}
+
+
+/* ==================================================
+   ACTIVATE STRENGTH SEGMENTS
+================================================== */
+
+function activarSegmentos(
+    cantidad
+) {
+
+    for (
+        let i = 0;
+        i < cantidad;
+        i++
+    ) {
+
+        setTimeout(
+            function () {
+
+                strengthSegments[i]
+                    .classList
+                    .add(
+                        "active"
+                    );
+
+            },
+            i * 70
+        );
 
     }
 
@@ -1709,7 +1625,7 @@ function actualizarEstadoCopy() {
 
 
 /* ==================================================
-   HISTORY
+   SESSION HISTORY
 ================================================== */
 
 function guardarEnHistorial(
@@ -1718,6 +1634,20 @@ function guardarEnHistorial(
 
     if (
         password === ""
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+        Avoid storing the same password
+        multiple times consecutively.
+    */
+
+    if (
+        historial[0] === password
     ) {
 
         return;
@@ -1741,6 +1671,10 @@ function guardarEnHistorial(
 
 }
 
+
+/* ==================================================
+   UPDATE HISTORY
+================================================== */
 
 function actualizarHistorial() {
 
@@ -1785,84 +1719,8 @@ function actualizarHistorial() {
         i++
     ) {
 
-        let item =
-            document.createElement(
-                "div"
-            );
-
-
-        item.className =
-            "history-item";
-
-
-        let password =
-            document.createElement(
-                "span"
-            );
-
-
-        password.className =
-            "history-password";
-
-
-        password.textContent =
-            historial[i];
-
-
-        let button =
-            document.createElement(
-                "button"
-            );
-
-
-        button.type =
-            "button";
-
-
-        button.className =
-            "history-copy";
-
-
-        button.textContent =
-            "↗";
-
-
-        button.setAttribute(
-            "aria-label",
-            traducciones.copyPassword ||
-            "Copy password"
-        );
-
-
-        button.setAttribute(
-            "title",
-            traducciones.copyPassword ||
-            "Copy password"
-        );
-
-
-        button.onclick =
-            function () {
-
-                copiarHistorial(
-                    historial[i]
-                );
-
-            };
-
-
-        item.appendChild(
-            password
-        );
-
-
-        item.appendChild(
-            button
-        );
-
-
-        historyList.appendChild(
-            item
+        crearElementoHistorial(
+            historial[i]
         );
 
     }
@@ -1870,16 +1728,275 @@ function actualizarHistorial() {
 }
 
 
-async function copiarHistorial(
+/* ==================================================
+   CREATE HISTORY ITEM
+================================================== */
+
+function crearElementoHistorial(
     password
+) {
+
+    let item =
+        document.createElement(
+            "div"
+        );
+
+
+    item.className =
+        "history-item";
+
+
+    let passwordText =
+        document.createElement(
+            "span"
+        );
+
+
+    passwordText.className =
+        "history-password";
+
+    passwordText.textContent =
+        "•".repeat(
+            Math.min(
+                password.length,
+                24
+            )
+        );
+
+
+    passwordText.dataset.password =
+        password;
+
+
+    let eye =
+        document.createElement(
+            "button"
+        );
+
+
+    eye.type =
+        "button";
+
+
+    eye.className =
+        "history-eye";
+
+
+    eye.setAttribute(
+        "aria-label",
+        traducciones.showPassword ||
+        "Show password"
+    );
+
+
+    eye.setAttribute(
+        "title",
+        traducciones.showPassword ||
+        "Show password"
+    );
+
+
+    eye.innerHTML = `
+
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+
+            <path
+                d="
+                    M2 12
+                    C4.5 7.5 8 5 12 5
+                    C16 5 19.5 7.5 22 12
+                    C19.5 16.5 16 19 12 19
+                    C8 19 4.5 16.5 2 12
+                    Z
+                "
+            ></path>
+
+            <circle
+                cx="12"
+                cy="12"
+                r="3"
+            ></circle>
+
+        </svg>
+
+    `;
+
+
+    eye.onclick =
+        function () {
+
+            let visible =
+                passwordText.dataset.visible ===
+                "true";
+
+
+            visible =
+                !visible;
+
+
+            passwordText.dataset.visible =
+                visible.toString();
+
+
+            if (
+                visible
+            ) {
+
+                passwordText.textContent =
+                    passwordText.dataset.password;
+
+
+                eye.setAttribute(
+                    "aria-label",
+                    traducciones.hidePassword ||
+                    "Hide password"
+                );
+
+
+                eye.setAttribute(
+                    "title",
+                    traducciones.hidePassword ||
+                    "Hide password"
+                );
+
+            } else {
+
+                passwordText.textContent =
+                    "•".repeat(
+                        Math.min(
+                            password.length,
+                            24
+                        )
+                    );
+
+
+                eye.setAttribute(
+                    "aria-label",
+                    traducciones.showPassword ||
+                    "Show password"
+                );
+
+
+                eye.setAttribute(
+                    "title",
+                    traducciones.showPassword ||
+                    "Show password"
+                );
+
+            }
+
+        };
+
+
+    let copy =
+        document.createElement(
+            "button"
+        );
+
+
+    copy.type =
+        "button";
+
+
+    copy.className =
+        "history-copy";
+
+
+    copy.setAttribute(
+        "aria-label",
+        traducciones.copyPassword ||
+        "Copy password"
+    );
+
+
+    copy.setAttribute(
+        "title",
+        traducciones.copyPassword ||
+        "Copy password"
+    );
+
+
+    copy.innerHTML = `
+
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+
+            <rect
+                x="8"
+                y="8"
+                width="10"
+                height="10"
+                rx="2"
+            ></rect>
+
+            <path
+                d="
+                    M6 16H5
+                    A2 2 0 0 1 3 14
+                    V5
+                    A2 2 0 0 1 5 3
+                    H14
+                    A2 2 0 0 1 16 5
+                    V6
+                "
+            ></path>
+
+        </svg>
+
+    `;
+
+
+    copy.onclick =
+        function () {
+
+            copiarHistorial(
+                password,
+                copy
+            );
+
+        };
+
+
+    item.appendChild(
+        passwordText
+    );
+
+
+    item.appendChild(
+        eye
+    );
+
+
+    item.appendChild(
+        copy
+    );
+
+
+    historyList.appendChild(
+        item
+    );
+
+}
+
+
+/* ==================================================
+   COPY HISTORY PASSWORD
+================================================== */
+
+async function copiarHistorial(
+    password,
+    button
 ) {
 
     try {
 
-        await navigator.clipboard
-            .writeText(
-                password
-            );
+        await navigator.clipboard.writeText(
+            password
+        );
+
+
+        button.classList.add(
+            "copied"
+        );
 
 
         mostrarEstado(
@@ -1888,10 +2005,22 @@ async function copiarHistorial(
         );
 
 
+        setTimeout(
+            function () {
+
+                button.classList.remove(
+                    "copied"
+                );
+
+            },
+            900
+        );
+
+
     } catch (error) {
 
         console.error(
-            "History copy error:",
+            "History clipboard error:",
             error
         );
 
@@ -1905,6 +2034,10 @@ async function copiarHistorial(
 
 }
 
+
+/* ==================================================
+   CLEAR HISTORY
+================================================== */
 
 function limpiarHistorial() {
 
@@ -1924,38 +2057,7 @@ function limpiarHistorial() {
 
 
 /* ==================================================
-   STATUS
-================================================== */
-
-function mostrarEstado(
-    mensaje
-) {
-
-    appStatus.textContent =
-        mensaje;
-
-
-    clearTimeout(
-        mostrarEstado.timeout
-    );
-
-
-    mostrarEstado.timeout =
-        setTimeout(
-            function () {
-
-                appStatus.textContent =
-                    "";
-
-            },
-            2500
-        );
-
-}
-
-
-/* ==================================================
-   SETTINGS PERSISTENCE
+   PREFERENCES
 ================================================== */
 
 function guardarPreferencias() {
@@ -1964,28 +2066,33 @@ function guardarPreferencias() {
         obtenerOpciones();
 
 
+    let preferencias = {
+
+        longitud:
+            longitud.value,
+
+        mayusculas:
+            opciones.mayusculas,
+
+        minusculas:
+            opciones.minusculas,
+
+        numeros:
+            opciones.numeros,
+
+        simbolos:
+            opciones.simbolos
+
+    };
+
+
     localStorage.setItem(
 
         "passwordForgePreferences",
 
-        JSON.stringify({
-
-            longitud:
-                longitud.value,
-
-            mayusculas:
-                opciones.mayusculas,
-
-            minusculas:
-                opciones.minusculas,
-
-            numeros:
-                opciones.numeros,
-
-            simbolos:
-                opciones.simbolos
-
-        })
+        JSON.stringify(
+            preferencias
+        )
 
     );
 
@@ -2098,7 +2205,106 @@ function cargarPreferencias() {
 
 
 /* ==================================================
-   CONFIGURATION
+   STATUS
+================================================== */
+
+function mostrarEstado(
+    mensaje
+) {
+
+    appStatus.textContent =
+        mensaje;
+
+
+    clearTimeout(
+        mostrarEstado.timeout
+    );
+
+
+    mostrarEstado.timeout =
+        setTimeout(
+            function () {
+
+                appStatus.textContent =
+                    "";
+
+            },
+            2500
+        );
+
+}
+
+
+/* ==================================================
+   ACCESSIBILITY
+================================================== */
+
+function actualizarAtributos() {
+
+    if (
+        Object.keys(
+            traducciones
+        ).length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        passwordVisible
+    ) {
+
+        eyeButton.setAttribute(
+            "aria-label",
+            traducciones.hidePassword
+        );
+
+        eyeButton.setAttribute(
+            "title",
+            traducciones.hidePassword
+        );
+
+    } else {
+
+        eyeButton.setAttribute(
+            "aria-label",
+            traducciones.showPassword
+        );
+
+        eyeButton.setAttribute(
+            "title",
+            traducciones.showPassword
+        );
+
+    }
+
+
+    copyButton.setAttribute(
+        "aria-label",
+        traducciones.copyPassword
+    );
+
+    copyButton.setAttribute(
+        "title",
+        traducciones.copyPassword
+    );
+
+
+    longitud.setAttribute(
+        "aria-label",
+        traducciones.lengthLabel
+    );
+
+
+    aplicarTema();
+
+}
+
+
+/* ==================================================
+   SETTINGS EVENTS
 ================================================== */
 
 function prepararEventosConfiguracion() {
@@ -2147,7 +2353,7 @@ function prepararEventosConfiguracion() {
 
 
 /* ==================================================
-   INITIALIZE
+   INITIALIZATION
 ================================================== */
 
 async function iniciarPasswordForge() {
@@ -2158,11 +2364,6 @@ async function iniciarPasswordForge() {
     temaActual =
         detectarTema();
 
-
-    /*
-        Theme can be applied immediately
-        without waiting for the translation.
-    */
 
     aplicarTema();
 
@@ -2180,11 +2381,9 @@ async function iniciarPasswordForge() {
 
     actualizarHistorial();
 
+    prepararEventosConfiguracion();
+
 }
 
-
-/* ==================================================
-   START
-================================================== */
 
 iniciarPasswordForge();
