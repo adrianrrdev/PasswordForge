@@ -1,39 +1,155 @@
 # 🔐 Password Forge
 
-Password Forge is a lightweight, responsive password generator built with **HTML, CSS, and vanilla JavaScript**.
+Password Forge is a lightweight, responsive password generator built with **HTML5, CSS3, and vanilla JavaScript**.
 
-It allows users to generate randomized passwords with a configurable length and selectable character sets, while providing password visibility controls, clipboard copying, and a simple strength estimation.
+The application generates configurable random passwords directly in the browser, provides client-side strength estimation, supports password visibility and clipboard operations, includes a session-only password history, and offers a multilingual interface with automatic language detection.
 
-Password Forge is part of **ProyectoZ**, a personal development journey focused on building real software, learning through practical projects, and improving as a developer.
+Password Forge is the first major project developed as part of **ProyectoZ**, a personal learning initiative focused on building, testing, documenting, deploying, and iteratively improving real software.
+
+---
 
 ## ✨ Features
 
-- 🔑 Generate randomized passwords
-- 📏 Choose a password length from 4 to 64 characters
-- 🔠 Include uppercase letters
-- 🔡 Include lowercase letters
-- 🔢 Include numbers
-- 🔣 Include symbols
-- ✅ Guarantees at least one character from every selected character set
-- 🎲 Uses the **Web Crypto API** for random character selection
-- 🔀 Shuffles generated characters before displaying the result
-- 👁️ Show and hide the generated password
-- 📋 Copy the password to the clipboard
-- 📊 Estimate password strength
-- 🌍 Automatic language detection
-- 🇬🇧 English interface
-- 🇪🇸 Spanish interface
-- 🇫🇷 French interface
-- 🇩🇪 German interface
-- 🇮🇹 Italian interface
-- 💾 Remembers the user's selected language
+- 🔑 Cryptographically stronger random password generation using the **Web Crypto API**
+- 📏 Configurable password length from **4 to 64 characters**
+- 🔠 Uppercase character support
+- 🔡 Lowercase character support
+- 🔢 Numeric character support
+- 🔣 Symbol support
+- ✅ Guarantees at least one character from every selected character category
+- 🔀 Shuffles generated characters before displaying the final password
+- 👁️ Show/hide password functionality
+- 📋 Clipboard integration for copying generated passwords
+- 📊 Client-side password strength estimation
+- 💡 Security recommendations based on password characteristics
+- 🕘 Session-only password history
+- 👁️ Individual visibility controls for history entries
+- 📋 Individual copy controls for history entries
+- 🧹 History clearing
+- 🌍 Automatic browser language detection
+- 🌐 Manual language selection
+- 💾 Persistent language preference
+- 🌙 Persistent light/dark theme
+- ☀️ Custom animated sun/moon theme control
 - 📱 Responsive layout for desktop and mobile
-- ✨ Custom animations and micro-interactions
-- 🎨 Custom UI built specifically for Password Forge
+- ♿ Keyboard focus states and accessible labels
+- 🎬 CSS micro-interactions and transitions
+- 🧠 Persistent password-generation preferences
+- 🚫 No server-side password storage
+
+---
+
+## 🧩 Architecture
+
+Password Forge is intentionally implemented as a client-side application without a frontend framework or backend.
+
+The application is divided into three primary layers:
+
+```text
+┌───────────────────────────────┐
+│            HTML5              │
+│   Semantic structure & UI     │
+└───────────────┬───────────────┘
+                │
+                ▼
+┌───────────────────────────────┐
+│             CSS3              │
+│ Layout · Responsive UI        │
+│ Themes · Animations           │
+└───────────────┬───────────────┘
+                │
+                ▼
+┌───────────────────────────────┐
+│          JavaScript           │
+│ Generation · State · UI logic │
+│ i18n · Clipboard · History    │
+└───────────────┬───────────────┘
+                │
+         ┌──────┴──────┐
+         ▼             ▼
+   Web Crypto API   Fetch API
+         │             │
+         ▼             ▼
+   Random values   Translation JSON
+```
+
+No build step, bundler, package manager, or external JavaScript dependency is required.
+
+---
+
+## 🔐 Password Generation
+
+Password generation is performed entirely in the browser.
+
+The application uses:
+
+```javascript
+crypto.getRandomValues()
+```
+
+to obtain cryptographically stronger random values instead of relying on `Math.random()` for password generation.
+
+### Character selection
+
+The user can independently enable:
+
+```text
+Uppercase
+Lowercase
+Numbers
+Symbols
+```
+
+Before filling the remaining positions, the generator inserts at least one character from each selected category.
+
+For example, when all four categories are enabled, the generated password is guaranteed to contain:
+
+```text
+At least 1 uppercase character
+At least 1 lowercase character
+At least 1 number
+At least 1 symbol
+```
+
+The complete result is then shuffled so that required characters are not kept in deterministic positions.
+
+### Random index selection
+
+The random character selection uses rejection sampling when selecting an index. This avoids the simple modulo approach introducing distribution bias when the random integer range is not evenly divisible by the size of the selected character set.
+
+---
+
+## 📊 Password Strength Estimation
+
+Password Forge includes a lightweight client-side heuristic for estimating password strength.
+
+The estimator considers characteristics including:
+
+- Password length
+- Uppercase character presence
+- Lowercase character presence
+- Numeric character presence
+- Symbol presence
+- Repeated character patterns
+- Simple sequential patterns
+
+The UI exposes four visual strength segments and the following labels:
+
+```text
+Very weak
+Weak
+Medium
+Strong
+Very strong
+```
+
+The estimator is intended as a **UX-oriented guideline**, not as a complete password-auditing engine or a guarantee of security.
+
+---
 
 ## 🌍 Internationalization
 
-Password Forge automatically detects the user's preferred browser language and loads the corresponding translation.
+Password Forge uses external JSON translation files instead of embedding all translations inside `script.js`.
 
 Supported languages:
 
@@ -45,7 +161,7 @@ German
 Italian
 ```
 
-Translations are stored separately in JSON files:
+Translation files are stored in:
 
 ```text
 translations/
@@ -56,68 +172,176 @@ translations/
 └── it.json
 ```
 
-Users can also manually switch languages from the language selector.
+### Automatic language detection
 
-The selected language is stored locally so it is preserved when the user returns to the application.
+The application checks the browser's preferred languages through:
 
-## 🛡️ Password Generation
+```javascript
+navigator.languages
+```
 
-Password Forge uses the browser's **Web Crypto API** through `crypto.getRandomValues()` to select random characters.
-
-When several character sets are enabled, the generator first ensures that each selected category contributes at least one character.
+It then extracts the base language code.
 
 For example:
 
 ```text
-Uppercase
-Lowercase
-Numbers
-Symbols
+es-ES → es
+en-US → en
+fr-FR → fr
+de-DE → de
+it-IT → it
 ```
 
-A generated password will contain at least one character from each selected category before the remaining characters are generated and the final result is shuffled.
+If the detected language is not supported, the application falls back to English.
 
-This prevents the required character types from always appearing in predictable positions.
+### Manual language selection
 
-## 📊 Password Strength
+Users can override automatic detection through the language selector.
 
-Password Forge includes a lightweight heuristic strength estimator.
+The selected language is stored in:
 
-The estimation considers:
+```javascript
+localStorage
+```
 
-- Password length
-- Uppercase characters
-- Lowercase characters
-- Numbers
-- Symbols
+and restored on subsequent visits.
 
-The interface displays five levels:
+---
+
+## 🌙 Theme System
+
+Password Forge includes persistent light and dark themes.
+
+The theme is represented using:
+
+```html
+<html data-theme="light">
+```
+
+or:
+
+```html
+<html data-theme="dark">
+```
+
+CSS variables are used to adapt the interface without maintaining two separate stylesheets.
+
+When no manual theme preference exists, the application also checks the operating system/browser preference through:
 
 ```text
-Very weak
-Weak
-Medium
-Strong
-Very strong
+prefers-color-scheme: dark
 ```
 
-This is intended as a **visual guideline**, not as a complete password security analysis or guarantee.
+The selected theme is stored locally and restored on subsequent visits.
+
+---
+
+## 🕘 Session History
+
+Password Forge maintains a history of the most recently generated passwords during the current browser session.
+
+The history:
+
+- Stores up to five passwords
+- Displays passwords masked by default
+- Allows individual show/hide operations
+- Allows individual copy operations
+- Can be cleared manually
+
+### Privacy decision
+
+The password history is deliberately **not stored in `localStorage`**.
+
+Only non-sensitive application preferences such as:
+
+```text
+Language
+Theme
+Password length
+Character selection
+```
+
+are persisted.
+
+This prevents generated passwords from being retained between sessions by the application.
+
+---
+
+## 📋 Clipboard
+
+The application uses the browser Clipboard API:
+
+```javascript
+navigator.clipboard.writeText()
+```
+
+Clipboard functionality is available both for the current generated password and for individual session-history entries.
+
+---
+
+## ♿ Accessibility
+
+The project includes several accessibility-oriented practices:
+
+- Semantic HTML structure
+- Explicit button types
+- Accessible labels
+- `aria-label` attributes for icon-only controls
+- `aria-live` regions for dynamic content
+- `aria-pressed` state for password visibility
+- Visible keyboard focus states
+- Reduced-motion support through:
+
+```css
+@media (prefers-reduced-motion: reduce)
+```
+
+Accessibility remains an area for further testing and improvement.
+
+---
+
+## 🎨 UI / UX
+
+Password Forge uses a custom visual system built around:
+
+### Typography
+
+- **Bungee** — primary title and project eyebrow
+- **Lexend Deca** — subtitle and generated password
+- **Spline Sans** — general interface text
+
+### Visual language
+
+- Soft neutral background
+- Purple primary accent
+- Rounded cards and controls
+- Responsive CSS Grid
+- Animated state transitions
+- Custom password visibility control
+- Custom animated sun/moon theme control
+- Light and dark theme variants
+
+The design goal is to keep the interface visually distinctive while maintaining a relatively small and dependency-free codebase.
+
+---
 
 ## 🛠️ Technologies
 
 | Technology | Purpose |
 |---|---|
-| **HTML5** | Application structure and semantic markup |
-| **CSS3** | Layout, responsive design, animations and UI styling |
-| **JavaScript** | Application logic and user interactions |
-| **Web Crypto API** | Random character generation |
-| **Clipboard API** | Copying passwords to the clipboard |
-| **Fetch API** | Loading language files dynamically |
-| **JSON** | Translation data storage |
-| **LocalStorage** | Remembering the selected language |
+| **HTML5** | Semantic application structure |
+| **CSS3** | Layout, theming, responsive design and animations |
+| **JavaScript (ES6+)** | Application logic and state management |
+| **Web Crypto API** | Random password generation |
+| **Clipboard API** | Password copying |
+| **Fetch API** | Loading translation resources |
+| **JSON** | External translation data |
+| **LocalStorage** | Persisting non-sensitive preferences |
 | **Git** | Version control |
-| **GitHub** | Repository hosting |
-| **GitHub Pages** | Deployment |
+| **GitHub** | Source-code hosting |
+| **GitHub Pages** | Static deployment |
+
+---
 
 ## 📁 Project Structure
 
@@ -139,43 +363,49 @@ PasswordForge/
     └── it.json
 ```
 
+---
+
 ## 🚀 Getting Started
 
-Password Forge does not require a build system, package manager, or external JavaScript libraries.
+Password Forge requires no package installation or build process.
 
-### Run locally
-
-Clone the repository:
+### Clone the repository
 
 ```bash
 git clone https://github.com/adrianrrdev/PasswordForge.git
 ```
 
-Move into the project directory:
+### Enter the project directory
 
 ```bash
 cd PasswordForge
 ```
 
-Because the application loads translation files using `fetch()`, it is recommended to run it through a local HTTP server rather than opening `index.html` directly with `file://`.
+### Run locally
 
-For example, using **Visual Studio Code** with a local development server:
+Because the application loads translation files through the Fetch API, it should preferably be served through a local HTTP server instead of being opened directly with `file://`.
+
+For example, using Visual Studio Code with a local development server:
 
 ```text
 VS Code
    ↓
-Local server
+Local HTTP server
    ↓
 http://localhost:...
    ↓
 Password Forge
 ```
 
+---
+
 ## 🌍 Live Demo
 
-Try the deployed application:
+The application is deployed through GitHub Pages:
 
 **https://adrianrrdev.github.io/PasswordForge/**
+
+---
 
 ## 📸 Screenshot
 
@@ -183,35 +413,69 @@ Try the deployed application:
 
 ![Password Forge interface](interface.png)
 
-## 🧠 What I Learned
+---
 
-Building Password Forge was an opportunity to move from individual programming exercises to a complete small web application.
+## 🧪 Testing
 
-Throughout the project I practiced:
+Password Forge has been manually tested during development across its main user flows.
 
-- Structuring web pages with HTML.
-- Building responsive layouts with CSS.
-- Using CSS variables.
-- Creating reusable UI components.
-- Working with Flexbox and CSS Grid.
-- Creating animations and micro-interactions.
-- Working with JavaScript functions and variables.
-- Manipulating the DOM.
-- Handling user interactions.
-- Validating user input.
-- Working with regular expressions.
-- Using the Clipboard API.
-- Using the Web Crypto API.
-- Loading external JSON data with `fetch()`.
-- Working with asynchronous JavaScript.
-- Using `localStorage`.
-- Implementing a multilingual interface.
-- Testing and debugging.
-- Using Git for version control.
-- Publishing a project with GitHub Pages.
-- Writing technical documentation.
+Recommended regression tests include:
 
-More importantly, Password Forge taught me the complete development cycle:
+```text
+✓ Generate a password
+✓ Change password length
+✓ Toggle uppercase
+✓ Toggle lowercase
+✓ Toggle numbers
+✓ Toggle symbols
+✓ Disable all categories
+✓ Generate passwords repeatedly
+✓ Show/hide current password
+✓ Copy current password
+✓ Generate multiple passwords
+✓ Show/hide history passwords
+✓ Copy history passwords
+✓ Clear session history
+✓ Change language
+✓ Reload and verify language persistence
+✓ Test unsupported browser language fallback
+✓ Switch light/dark mode
+✓ Reload and verify theme persistence
+✓ Test responsive layouts
+```
+
+---
+
+## 📚 What I Learned
+
+Building Password Forge was an opportunity to move from isolated programming exercises to a complete frontend application.
+
+The project introduced and reinforced:
+
+- HTML structure and semantic markup
+- CSS Grid and responsive layouts
+- CSS variables
+- Typography systems
+- UI state styling
+- CSS transitions and animations
+- JavaScript functions and variables
+- DOM manipulation
+- Input validation
+- Regular expressions
+- Web Crypto API
+- Clipboard API
+- Fetch API
+- JSON
+- Asynchronous JavaScript
+- LocalStorage
+- Internationalization
+- Client-side state management
+- Accessibility fundamentals
+- Git and GitHub workflows
+- GitHub Pages deployment
+- Technical documentation
+
+More importantly, the project provided experience with the complete development lifecycle:
 
 ```text
 Idea
@@ -233,30 +497,39 @@ Version Control
 Deployment
 ```
 
+---
+
 ## 🔮 Future Improvements
 
-Potential improvements for future versions include:
+Possible future improvements include:
 
-- [ ] Add password history
-- [ ] Add more customization options
-- [ ] Improve the strength estimator
-- [ ] Add more advanced security recommendations
-- [ ] Improve accessibility
-- [ ] Add automated tests
-- [ ] Add more visual themes
-- [ ] Add more languages
-- [ ] Improve error handling
-- [ ] Add additional UI micro-interactions
+- [ ] Replace the heuristic strength estimator with a more sophisticated analysis model
+- [ ] Add automated unit and integration tests
+- [ ] Add more comprehensive accessibility testing
+- [ ] Add additional translation languages
+- [ ] Improve error handling and user feedback
+- [ ] Add a configurable symbol set
+- [ ] Add a dedicated landing page
+- [ ] Add an offline-first translation strategy
+- [ ] Improve modularity and separation of concerns
+- [ ] Package the project as a reusable frontend template
+- [ ] Add Progressive Web App (PWA) support
+
+---
 
 ## 🎮 ProyectoZ
 
-Password Forge is the first major project of **ProyectoZ**, a personal year-long challenge focused on learning by building real software.
+Password Forge is the first major project of **ProyectoZ**, a personal year-long challenge focused on practical software development.
 
-The goal of ProyectoZ is not simply to learn programming concepts, but to develop the ability to:
+ProyectoZ is based on a simple development loop:
 
 > **Build. Test. Improve. Document. Publish.**
 
-Each project is designed to introduce new technologies and increasingly advanced development concepts while creating something that can become part of a real portfolio.
+Each project is intended to introduce new concepts while producing something concrete that can become part of a professional portfolio.
+
+Password Forge represents the first step from classroom exercises toward independently building and shipping a complete web application.
+
+---
 
 ## 👨‍💻 Author
 
@@ -264,4 +537,4 @@ Built by **[adrianrrdev](https://github.com/adrianrrdev)** as part of **Proyecto
 
 ---
 
-⭐ **If you found Password Forge useful or interesting, feel free to explore the repository and follow the project's development.**
+⭐ **Explore the repository, try the live demo, and follow the evolution of ProyectoZ.**
